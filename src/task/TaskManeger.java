@@ -26,15 +26,17 @@ public class TaskManeger {
     public void removeAllTasks(){ // удавление списка всех задач
         taskList.clear();
     }
-
     public Task getById(Integer id) { // получение задачи по идентифекатору
         return taskList.get(id);
     }
     public void removeById(Integer id) { // удаление задачи по идентификатору
         taskList.remove(id);
     }
-
-
-
-
+    public void undateTask(Task task){
+        Task saved = taskList.get(task.getId());
+        if (saved == null) {
+            return;
+        }
+            taskList.put(task.getId(), task);
+    }
 }

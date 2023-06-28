@@ -14,7 +14,7 @@ public class TaskManeger {
     }
 
     // ОБработка Задач task
-    public Task crieteTask(Task task){ // создаем задачу
+    public Task crieteTask(Task task){ // создание задачи и ее сохранение в Map
        int id = getGenerateId();
        task.setId(id);
        taskList.put(id,task);
@@ -23,6 +23,10 @@ public class TaskManeger {
     public ArrayList<Task> getAllTasks(){ // получение списка всех задач
        return new ArrayList(taskList.values());
     }
+    public void removeAllTasks(){ // удавление списка всех задач
+        taskList.clear();
+    }
+
     public Task getById(Integer id) { // получение задачи по идентифекатору
         return taskList.get(id);
     }

@@ -42,7 +42,6 @@ public class TaskManager {
             taskList.put(task.getId(), task);
     }
 
-
     // Обработка Задач epic
     public Epic crieteEpic(Epic epic){ // создание эпика и ее сохранение в Map
         int id = getGenerateId();
@@ -64,12 +63,21 @@ public class TaskManager {
     public void removeEpicById(Integer id) { // удаление задачи по идентификатору
         epicList.remove(id);
     }
-    public void updateEpic(Epic epic){
-        Epic saved = epicList.get(epic.getId());
-        if (saved == null) {
-            return;
+    public void updateEpic(Subtask subtask){
+        Epic epic = epicList.get(subtask.getEpicId());
+        ArrayList<Integer> listSubtaskId = epic.getSubtaskId();
+        boolean isChangeStatus = false;
+        for (int id: listSubtaskId) {
+            String status = subtaskList.get(id).getStatus();
+            // получили информацию по статусу подзадачи
+            //if (status.equals("NEW")
         }
-        epicList.put(epic.getId(), epic);
+
+
+//        if (saved == null) {
+//            return;
+//        }
+//        epicList.put(epic.getId(), epic);
     }
     public ArrayList<Subtask> getListSubtaskInEpic(Integer id){
         Epic epic = epicList.get(id);
@@ -86,17 +94,20 @@ public class TaskManager {
         int id = getGenerateId();
         subtask.setId(id);
         subtaskList.put(id,subtask);
+        addSubtaskToEpicSubtaskList(subtask);
+        return subtask;
+    }
+    public void addSubtaskToEpicSubtaskList (Subtask subtask){ // внесение ID subtask в список подзадач Epic
         Epic epic = epicList.get(subtask.getEpicId());
         ArrayList<Integer> listSubtaskId = epic.getSubtaskId();
-        listSubtaskId.add(id);
+        listSubtaskId.add(subtask.getId());
         epic.setSubtaskId(listSubtaskId);
-        return subtask;
     }
     public ArrayList<Task> getAllSubtasks(){ // получение списка всех subtask
         return new ArrayList(subtaskList.values());
     }
     public void removeAllSubtasks(){ // удавление списка всех subtask
-        taskList.clear();
+        subtaskList.clear();
     }
     public Subtask getSubtaskById(Integer id) { // получение subtask по идентифекатору
         return subtaskList.get(id);
@@ -104,13 +115,13 @@ public class TaskManager {
     public void removeSubtaskById(Integer id) { // удаление subtask по идентификатору
         subtaskList.remove(id);
     }
-//    public void updateTask(Task task){
-//        Task saved = taskList.get(task.getId());
-//        if (saved == null) {
-//            return;
-//        }
-//        taskList.put(task.getId(), task);
-//    }
-
-
+    public void updateSubtask(Subtask subtask){
+        Task saved = subtaskList.get(subtask.getId());
+        if (saved == null) {
+            return;
+        }
+        subtaskList.put(subtask.getId(), subtask);
+        updateEpic(subtask);
+    }
 }
+

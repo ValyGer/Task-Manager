@@ -23,8 +23,7 @@ public class Main {
 
         subtask1 = taskManager.crieteSubtask(subtask1);
         subtask2 = taskManager.crieteSubtask(subtask2);
-        System.out.println(subtask1);
-        System.out.println(subtask2);
+
 
         /*
         Тестирование task:
@@ -57,11 +56,18 @@ public class Main {
         4. очищаем весь список subtask
         5. Модификация subtask
          */
-
-
-
-
-
+        System.out.println(subtask1);
+        System.out.println(subtask2);
+        System.out.println(taskManager.getAllSubtasks());
+        System.out.println(taskManager.getSubtaskById(subtask1.getId()));
+        Subtask apdateSubtask = taskManager.getSubtaskById(subtask1.getId());
+        apdateSubtask.setStatus("IN_PROGRESS");
+        taskManager.updateSubtask(apdateSubtask);
+        System.out.println(taskManager.getAllSubtasks());
+        taskManager.removeSubtaskById(subtask2.getId());
+        System.out.println(taskManager.getAllSubtasks());
+        taskManager.removeAllSubtasks();
+        System.out.println(taskManager.getAllSubtasks());
 
         System.out.println();
 
@@ -78,11 +84,11 @@ public class Main {
         System.out.println(taskManager.getAllEpics());
 
         System.out.println();
-                System.out.println(taskManager.getListSubtaskInEpic(3));
+                System.out.println(taskManager.getListSubtaskInEpic(epic1.getId()));
         System.out.println();
 
-        System.out.println(taskManager.getEpicById(3));
-        taskManager.removeEpicById(4);
+        System.out.println(taskManager.getEpicById(epic1.getId()));
+        taskManager.removeEpicById(epic2.getId());
         System.out.println(taskManager.getAllEpics());
         taskManager.removeAllEpics();
         System.out.println(taskManager.getAllEpics());

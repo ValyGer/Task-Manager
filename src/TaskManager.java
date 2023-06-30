@@ -1,9 +1,11 @@
-package task;
+import task.Epic;
+import task.Subtask;
+import task.Task;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class TaskManeger {
+public class TaskManager {
     private int generateId = 0;
     private HashMap<Integer, Task> taskList = new HashMap<>();
     private HashMap<Integer, Epic> epicList = new HashMap<>();
@@ -32,7 +34,7 @@ public class TaskManeger {
     public void removeTaskById(Integer id) { // удаление задачи по идентификатору
         taskList.remove(id);
     }
-    public void undateTask(Task task){
+    public void updateTask(Task task){
         Task saved = taskList.get(task.getId());
         if (saved == null) {
             return;
@@ -46,8 +48,8 @@ public class TaskManeger {
         int id = getGenerateId();
         epic.setId(id);
         epicList.put(id,epic);
-        ArrayList<Integer> listSutaskId = new ArrayList<>();
-        epic.setSubtaskId(listSutaskId);
+        ArrayList<Integer> listSubtaskId = new ArrayList<>();
+        epic.setSubtaskId(listSubtaskId);
         return epic;
     }
     public ArrayList<Epic> getAllEpics(){ // получение списка всех эпиков
@@ -62,7 +64,7 @@ public class TaskManeger {
     public void removeEpicById(Integer id) { // удаление задачи по идентификатору
         epicList.remove(id);
     }
-    public void undateEpic(Epic epic){
+    public void updateEpic(Epic epic){
         Epic saved = epicList.get(epic.getId());
         if (saved == null) {
             return;
@@ -71,38 +73,38 @@ public class TaskManeger {
     }
     public ArrayList<Subtask> getListSubtaskInEpic(Integer id){
         Epic epic = epicList.get(id);
-        ArrayList<Subtask> listSutaskInEpic = new ArrayList<>();
+        ArrayList<Subtask> listSubtaskInEpic = new ArrayList<>();
         for (Integer subtaskId: epic.getSubtaskId()) {
-            listSutaskInEpic.add(subtaskList.get(subtaskId));
+            listSubtaskInEpic.add(subtaskList.get(subtaskId));
         }
-        return listSutaskInEpic;
+        return listSubtaskInEpic;
     }
 
 
     // ОБработка Задач subtask
-    public Subtask crieteSubtask(Subtask subtask){ // создание задачи и ее сохранение в Map
+    public Subtask crieteSubtask(Subtask subtask){ // создание subtask и ее сохранение в Map
         int id = getGenerateId();
         subtask.setId(id);
         subtaskList.put(id,subtask);
         Epic epic = epicList.get(subtask.getEpicId());
-        ArrayList<Integer> listSutaskId = epic.getSubtaskId();
-        listSutaskId.add(id);
-        epic.setSubtaskId(listSutaskId);
+        ArrayList<Integer> listSubtaskId = epic.getSubtaskId();
+        listSubtaskId.add(id);
+        epic.setSubtaskId(listSubtaskId);
         return subtask;
     }
-//    public ArrayList<Task> getAllTasks(){ // получение списка всех задач
-//        return new ArrayList(taskList.values());
-//    }
-//    public void removeAllTasks(){ // удавление списка всех задач
-//        taskList.clear();
-//    }
-//    public Task getTaskById(Integer id) { // получение задачи по идентифекатору
-//        return taskList.get(id);
-//    }
-//    public void removeTaskById(Integer id) { // удаление задачи по идентификатору
-//        taskList.remove(id);
-//    }
-//    public void undateTask(Task task){
+    public ArrayList<Task> getAllSubtasks(){ // получение списка всех subtask
+        return new ArrayList(subtaskList.values());
+    }
+    public void removeAllSubtasks(){ // удавление списка всех subtask
+        taskList.clear();
+    }
+    public Subtask getSubtaskById(Integer id) { // получение subtask по идентифекатору
+        return subtaskList.get(id);
+    }
+    public void removeSubtaskById(Integer id) { // удаление subtask по идентификатору
+        subtaskList.remove(id);
+    }
+//    public void updateTask(Task task){
 //        Task saved = taskList.get(task.getId());
 //        if (saved == null) {
 //            return;

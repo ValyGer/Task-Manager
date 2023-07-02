@@ -15,7 +15,7 @@ public class TaskManager {
         return ++generateId;
     }
 
-    // ОБработка task
+    // Обработка task
     public Task crieteTask(Task task){ // создание задачи и ее сохранение в Map
        int id = getGenerateId();
        task.setId(id);
@@ -34,7 +34,7 @@ public class TaskManager {
     public void removeTaskById(Integer id) { // удаление задачи по идентификатору
         taskList.remove(id);
     }
-    public void updateTask(Task task){
+    public void updateTask(Task task){ // обновление task
         Task saved = taskList.get(task.getId());
         if (saved == null) {
             return;
@@ -63,7 +63,7 @@ public class TaskManager {
     public void removeEpicById(Integer id) { // удаление задачи по идентификатору
         epicList.remove(id);
     }
-    public void updateEpic(Subtask subtask){
+    public void updateEpic(Subtask subtask){ // обновление epic
         Epic epic = epicList.get(subtask.getEpicId());
         ArrayList<Integer> listSubtaskId = epic.getSubtaskId();
         if (listSubtaskId.isEmpty()) {
@@ -88,7 +88,7 @@ public class TaskManager {
             }
         }
     }
-    public ArrayList<Subtask> getListSubtaskInEpic(Integer id){
+    public ArrayList<Subtask> getListSubtaskInEpic(Integer id){ // получение списка subtask в epic
         Epic epic = epicList.get(id);
         ArrayList<Subtask> listSubtaskInEpic = new ArrayList<>();
         for (Integer subtaskId: epic.getSubtaskId()) {
@@ -116,16 +116,16 @@ public class TaskManager {
         return new ArrayList(subtaskList.values());
     }
     public void removeAllSubtasks(){ // удавление списка всех subtask
-        for (Subtask subtask: subtaskList.values()) {
+        for (Subtask subtask: subtaskList.values()) { // удаление subtask из списков epic
             removeSubtaskFromEpic(subtask.getId());
-            updateEpic(subtask); // обновляем статус в эпике
+            updateEpic(subtask);
         }
         subtaskList.clear();
     }
     public void removeSubtaskById(Integer id) { // удаление subtask по идентификатору
-        removeSubtaskFromEpic(id); // удаляем из списка в эпике
-        updateEpic(subtaskList.get(id)); // обновляем статус в эпике
-        subtaskList.remove(id); // удалаяем из списка подзадач
+        removeSubtaskFromEpic(id);
+        updateEpic(subtaskList.get(id));
+        subtaskList.remove(id);
     }
     public Subtask getSubtaskById(Integer id) { // получение subtask по идентифекатору
         return subtaskList.get(id);
@@ -137,7 +137,7 @@ public class TaskManager {
         listSubtaskId.remove(subtask.getId());
         epic.setSubtaskId(listSubtaskId);
     }
-    public void updateSubtask(Subtask subtask){
+    public void updateSubtask(Subtask subtask){ // Обновление subtask
         Task saved = subtaskList.get(subtask.getId());
         if (saved == null) {
             return;

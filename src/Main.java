@@ -23,9 +23,22 @@ public class Main {
         Subtask subtask3 = new Subtask("Подзадача 3", "Описание подзадачи 3","NEW", epic2.getId());
         subtask3 = taskManager.crieteSubtask(subtask3);
 
-        System.out.println(taskManager.getAllEpics());
-        System.out.println(taskManager.getAllSubtasks());
-        System.out.println(taskManager.getAllTasks());
+
+        printListOfTasks(taskManager);
+        Subtask modifiedSubtask = taskManager.getSubtaskById(subtask3.getId());
+        modifiedSubtask.setStatus("IN_PROGRESS");
+        taskManager.updateSubtask(modifiedSubtask);
+        printListOfTasks(taskManager);
+
+        taskManager.removeTaskById(task1.getId());
+        taskManager.removeSubtaskById(subtask3.getId());
+        printListOfTasks(taskManager);
 
     }
+    public static void printListOfTasks (TaskManager taskManager) {
+        System.out.println(taskManager.getAllEpics());
+        System.out.println(taskManager.getAllTasks());
+        System.out.println(taskManager.getAllSubtasks());
+    }
+
 }

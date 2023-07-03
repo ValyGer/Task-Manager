@@ -5,18 +5,19 @@ public class Task {
     protected String name;
     protected String description;
     protected String status;
-
-    public Task(String name, String description, String status) {
-        this.name = name;
-        this.description = description;
-        this.status = status;
-    }
+    private static int generateId = 0;
 
     public Task(String name, String description) {
+        this.id = getGenerateId();
         this.name = name;
         this.description = description;
         this.status = "NEW";
     }
+
+    private int getGenerateId() {
+        return ++generateId;
+    }
+
     public Integer getId() {
         return id;
     }

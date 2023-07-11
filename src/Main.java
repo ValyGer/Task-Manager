@@ -4,7 +4,7 @@ import task.Task;
 
 public class Main {
     public static void main(String[] args) {
-        TaskManager taskManager = new TaskManager();
+        InMemoryTaskManager taskManager = new InMemoryTaskManager();
 
         Task task1 = new Task("Задача 1", "Описание задачи 1");
         Task task2 = new Task("Задача 2", "Описание задачи 2");

@@ -5,6 +5,8 @@ import task.Subtask;
 import task.Task;
 import task.TaskStatus;
 
+import java.util.LinkedList;
+
 public class Main {
     public static void main(String[] args) {
         InMemoryTaskManager taskManager = new InMemoryTaskManager();
@@ -26,7 +28,6 @@ public class Main {
         Subtask subtask3 = new Subtask("Подзадача 3", "Описание подзадачи 3", epic2.getId());
         subtask3 = taskManager.createSubtask(subtask3);
 
-
         printListOfTasks(taskManager);
         Subtask modifiedSubtask = taskManager.getSubtaskById(subtask3.getId());
         modifiedSubtask.setStatus(TaskStatus.IN_PROGRESS);
@@ -42,6 +43,15 @@ public class Main {
         newEpic2.setDescription("Описание нового эпика 2");
         taskManager.updateEpic(newEpic2);
         printListOfTasks(taskManager);
+
+
+        System.out.println();
+        System.out.println();
+        LinkedList<Task> history = taskManager.getHistory();
+        for (Task task: history) {
+            System.out.println(task);
+        }
+
     }
 
     public static void printListOfTasks(TaskManager taskManager) {
@@ -49,5 +59,4 @@ public class Main {
         System.out.println(taskManager.getAllTasks());
         System.out.println(taskManager.getAllSubtasks());
     }
-
 }

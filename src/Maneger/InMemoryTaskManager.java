@@ -7,12 +7,14 @@ import task.TaskStatus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 public class InMemoryTaskManager implements TaskManager{
     private HashMap<Integer, Task> taskList = new HashMap<>();
     private HashMap<Integer, Epic> epicList = new HashMap<>();
     private HashMap<Integer, Subtask> subtaskList = new HashMap<>();
 
+    private final InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
 
     // Обработка task
     @Override
@@ -33,7 +35,9 @@ public class InMemoryTaskManager implements TaskManager{
 
     @Override
     public Task getTaskById(Integer id) { // получение задачи по идентифекатору
-        return taskList.get(id);
+        Task task = taskList.get(id);
+        historyManager.addTask(task);
+        return task;
     }
 
     @Override
@@ -72,7 +76,9 @@ public class InMemoryTaskManager implements TaskManager{
 
     @Override
     public Epic getEpicById(Integer id) { // получение эпика по идентифекатору
-        return epicList.get(id);
+        Epic epic = epicList.get(id);
+        historyManager.addTask((Task)epic);
+        return epic;
     }
 
     @Override
@@ -160,7 +166,9 @@ public class InMemoryTaskManager implements TaskManager{
 
     @Override
     public Subtask getSubtaskById(Integer id) { // получение subtask по идентифекатору
-        return subtaskList.get(id);
+        Subtask subtask = subtaskList.get(id);
+        historyManager.addTask((Task)subtask);
+        return subtask;
     }
 
     private void removeSubtaskFromEpic(Integer id) { // удаление ID subtask из списка подзадач Epic
@@ -179,5 +187,9 @@ public class InMemoryTaskManager implements TaskManager{
         }
         subtaskList.put(subtask.getId(), subtask);
         updateEpicStatus(subtask);
+    }
+
+    public LinkedList<Task> getHistory(){
+        return historyManager.getHistory();
     }
 }

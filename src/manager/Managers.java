@@ -1,4 +1,4 @@
-package Maneger;
+package manager;
 
 public final class Managers {
 

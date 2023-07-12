@@ -1,4 +1,4 @@
-package Maneger;
+package manager;
 
 import task.Epic;
 import task.Subtask;
@@ -33,5 +33,5 @@ public interface TaskManager {
     Subtask getSubtaskById(Integer id);
     void updateSubtask(Subtask subtask);
 
-    public LinkedList<Task> getHistory();
+    LinkedList<Task> getHistory();
 }

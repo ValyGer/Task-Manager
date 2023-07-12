@@ -14,7 +14,7 @@ public class InMemoryTaskManager implements TaskManager{
     private HashMap<Integer, Epic> epicList = new HashMap<>();
     private HashMap<Integer, Subtask> subtaskList = new HashMap<>();
 
-    private final InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
+    private final HistoryManager historyManager = Managers.getHistoryDefault();
 
     // Обработка task
     @Override
@@ -188,7 +188,7 @@ public class InMemoryTaskManager implements TaskManager{
         subtaskList.put(subtask.getId(), subtask);
         updateEpicStatus(subtask);
     }
-
+    @Override
     public LinkedList<Task> getHistory(){
         return historyManager.getHistory();
     }

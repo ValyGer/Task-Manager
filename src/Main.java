@@ -1,4 +1,5 @@
 import Maneger.InMemoryTaskManager;
+import Maneger.Managers;
 import Maneger.TaskManager;
 import task.Epic;
 import task.Subtask;
@@ -9,7 +10,7 @@ import java.util.LinkedList;
 
 public class Main {
     public static void main(String[] args) {
-        InMemoryTaskManager taskManager = new InMemoryTaskManager();
+        TaskManager taskManager = Managers.getDefault();
 
         Task task1 = new Task("Задача 1", "Описание задачи 1");
         Task task2 = new Task("Задача 2", "Описание задачи 2");

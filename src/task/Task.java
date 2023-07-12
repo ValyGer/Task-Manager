@@ -4,14 +4,13 @@ public class Task {
     protected Integer id;
     protected String name;
     protected String description;
-    protected String status;
+    protected TaskStatus status;
     private static int generateId = 0;
-
     public Task(String name, String description) {
         this.id = getGenerateId();
         this.name = name;
         this.description = description;
-        this.status = "NEW";
+        this.status = TaskStatus.NEW;
     }
 
     private int getGenerateId() {
@@ -42,11 +41,11 @@ public class Task {
         this.description = description;
     }
 
-    public String getStatus() {
+    public TaskStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(TaskStatus status) {
         this.status = status;
     }
 

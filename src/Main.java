@@ -1,6 +1,9 @@
+import Maneger.InMemoryTaskManager;
+import Maneger.TaskManager;
 import task.Epic;
 import task.Subtask;
 import task.Task;
+import task.TaskStatus;
 
 public class Main {
     public static void main(String[] args) {
@@ -26,7 +29,7 @@ public class Main {
 
         printListOfTasks(taskManager);
         Subtask modifiedSubtask = taskManager.getSubtaskById(subtask3.getId());
-        modifiedSubtask.setStatus("IN_PROGRESS");
+        modifiedSubtask.setStatus(TaskStatus.IN_PROGRESS);
         taskManager.updateSubtask(modifiedSubtask);
         printListOfTasks(taskManager);
 

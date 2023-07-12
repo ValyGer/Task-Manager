@@ -1,6 +1,9 @@
+package Maneger;
+
 import task.Epic;
 import task.Subtask;
 import task.Task;
+import task.TaskStatus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -90,24 +93,24 @@ public class InMemoryTaskManager implements TaskManager{
         Epic epic = epicList.get(subtask.getEpicId());
         ArrayList<Subtask> listSubtasks = epic.getSubtask();
         if (listSubtasks.isEmpty()) {
-            epic.setStatus("NEW");
+            epic.setStatus(TaskStatus.NEW);
         } else {
             int newValue = 0;
             int doneValue = 0;
             for (Subtask subtaskInEpic : listSubtasks) {
                 // получили информацию по статусу подзадачи
-                if (subtaskInEpic.getStatus().equals("NEW")) {
+                if (subtaskInEpic.getStatus().equals(TaskStatus.NEW)) {
                     newValue++;
-                } else if (subtaskInEpic.getStatus().equals("DONE")) {
+                } else if (subtaskInEpic.getStatus().equals(TaskStatus.DONE)) {
                     doneValue++;
                 }
             }
             if (newValue == listSubtasks.size()) {
-                epic.setStatus("NEW");
+                epic.setStatus(TaskStatus.NEW);
             } else if (doneValue == listSubtasks.size()) {
-                epic.setStatus("DONE");
+                epic.setStatus(TaskStatus.DONE);
             } else {
-                epic.setStatus("IN_PROGRESS");
+                epic.setStatus(TaskStatus.IN_PROGRESS);
             }
         }
     }

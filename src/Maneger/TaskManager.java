@@ -9,26 +9,26 @@ import java.util.ArrayList;
 public interface TaskManager {
 
     // Обработка task
-    public Task createTask(Task task);
-    public ArrayList<Task> getAllTasks();
-    public void removeAllTasks();
-    public Task getTaskById(Integer id);
-    public void removeTaskById(Integer id);
-    public void updateTask(Task task);
+    Task createTask(Task task);
+    ArrayList<Task> getAllTasks();
+    void removeAllTasks();
+    Task getTaskById(Integer id);
+    void removeTaskById(Integer id);
+    void updateTask(Task task);
 
     // Обработка epic
-    public Epic createEpic(Epic epic);
-    public ArrayList<Epic> getAllEpics();
-    public void removeAllEpics();
-    public Epic getEpicById(Integer id);
-    public void removeEpicById(Integer id);
-    public void updateEpic(Epic epic);
+    Epic createEpic(Epic epic);
+    ArrayList<Epic> getAllEpics();
+    void removeAllEpics();
+    Epic getEpicById(Integer id);
+    void removeEpicById(Integer id);
+    void updateEpic(Epic epic);
 
     // ОБработка subtask
-    public Subtask createSubtask(Subtask subtask);
-    public ArrayList<Subtask> getAllSubtasks();
-    public void removeAllSubtasks();
-    public void removeSubtaskById(Integer id);
-    public Subtask getSubtaskById(Integer id);
-    public void updateSubtask(Subtask subtask);
+    Subtask createSubtask(Subtask subtask);
+    ArrayList<Subtask> getAllSubtasks();
+    void removeAllSubtasks();
+    void removeSubtaskById(Integer id);
+    Subtask getSubtaskById(Integer id);
+    void updateSubtask(Subtask subtask);
 }

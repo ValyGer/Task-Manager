@@ -77,7 +77,7 @@ public class InMemoryTaskManager implements TaskManager{
     @Override
     public Epic getEpicById(Integer id) { // получение эпика по идентифекатору
         Epic epic = epicList.get(id);
-        historyManager.addTask((Task)epic);
+        historyManager.addTask(epic);
         return epic;
     }
 
@@ -167,7 +167,7 @@ public class InMemoryTaskManager implements TaskManager{
     @Override
     public Subtask getSubtaskById(Integer id) { // получение subtask по идентифекатору
         Subtask subtask = subtaskList.get(id);
-        historyManager.addTask((Task)subtask);
+        historyManager.addTask(subtask);
         return subtask;
     }
 

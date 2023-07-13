@@ -24,6 +24,7 @@ public interface TaskManager {
     Epic getEpicById(Integer id);
     void removeEpicById(Integer id);
     void updateEpic(Epic epic);
+    ArrayList<Subtask> getListSubtaskInEpic(Integer id);
 
     // ОБработка subtask
     Subtask createSubtask(Subtask subtask);

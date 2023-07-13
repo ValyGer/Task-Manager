@@ -121,9 +121,10 @@ public class InMemoryTaskManager implements TaskManager {
         }
     }
 
+    @Override
     public ArrayList<Subtask> getListSubtaskInEpic(Integer id) { // получение списка subtask в epic
         Epic epic = epicList.get(id);
-        ArrayList<Subtask> listSubtasksInEpic = new ArrayList<>();
+        ArrayList<Subtask> listSubtasksInEpic = epic.getSubtask();
         return listSubtasksInEpic;
     }
 

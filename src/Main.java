@@ -70,12 +70,11 @@ public class Main {
         System.out.println();
 
         LinkedList<Task> history = taskManager.getHistory();
-        for (Task task: history) {
+        for (Task task : history) {
             System.out.println(task);
         }
 //      Изменен порядок заполннения истории.
 //      Ожидаем в истории "Задача 2" - 1 элемент, "Подзадача 3" - 10 элемент
-
     }
 
     public static void printListOfTasks(TaskManager taskManager) {

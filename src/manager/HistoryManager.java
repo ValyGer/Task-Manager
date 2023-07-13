@@ -8,5 +8,4 @@ public interface HistoryManager {
     LinkedList<Task> getHistory();
 
     void addTask(Task task);
-
 }

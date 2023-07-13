@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-public class InMemoryTaskManager implements TaskManager{
+public class InMemoryTaskManager implements TaskManager {
     private HashMap<Integer, Task> taskList = new HashMap<>();
     private HashMap<Integer, Epic> epicList = new HashMap<>();
     private HashMap<Integer, Subtask> subtaskList = new HashMap<>();
@@ -143,6 +143,7 @@ public class InMemoryTaskManager implements TaskManager{
         listSubtasks.add(subtask);
         epic.setSubtask(listSubtasks);
     }
+
     @Override
     public ArrayList<Subtask> getAllSubtasks() { // получение списка всех subtask
         return new ArrayList(subtaskList.values());
@@ -188,8 +189,9 @@ public class InMemoryTaskManager implements TaskManager{
         subtaskList.put(subtask.getId(), subtask);
         updateEpicStatus(subtask);
     }
+
     @Override
-    public LinkedList<Task> getHistory(){
+    public LinkedList<Task> getHistory() {
         return historyManager.getHistory();
     }
 }

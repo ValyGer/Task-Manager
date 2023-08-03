@@ -1,28 +1,64 @@
 package manager;
 
 import task.Task;
-
-import java.util.LinkedList;
-
+import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.ArrayList;
 
 public class InMemoryHistoryManager implements HistoryManager {
-    public static final int HISTORY_SIZE = 10;
-    private final LinkedList<Task> history = new LinkedList<>();
+    Node first;
+    Node last;
+    Map<Integer, Node> map = new HashMap<>();
 
     @Override
-    public LinkedList<Task> getHistory() {
+    public List<Task> getHistory() {
+        return getTasks();
+    }
+    public List<Task> getTasks() {
+        List<Task> history = new ArrayList<>();
+        if (first == null) {
+            return history;
+        }
+        Node node = first;
+        while (node != null) {
+            history.add(node.getValue());
+            node = node.next;
+        }
         return history;
     }
-
     @Override
     public void addTask(Task task) {
-        if (task != null) {
-            if (history.size() >= HISTORY_SIZE) {
-                history.removeLast();
-                history.addFirst(task);
-            } else {
-                history.addFirst(task);
-            }
+        linkLast(task);
+    }
+    public void linkLast(Task task) {
+        Node node = new Node(task);
+        if (first != null) {
+            last.next = node;
+            node.prev = last;
+            last = node;
+        } else {
+            first = node;
+            last = node;
         }
     }
+    @Override
+    public void remove(int id) {
+
+    }
+
+    static class Node {
+        Task value;
+        Node next;
+        Node prev;
+
+        public Node(Task value) {
+            this.value = value;
+        }
+
+        public Task getValue() {
+            return value;
+        }
+    }
+
 }

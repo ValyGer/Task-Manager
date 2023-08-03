@@ -5,7 +5,7 @@ import task.Subtask;
 import task.Task;
 import task.TaskStatus;
 
-import java.util.LinkedList;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -69,7 +69,7 @@ public class Main {
         System.out.println();
         System.out.println();
 
-        LinkedList<Task> history = taskManager.getHistory();
+        List<Task> history = taskManager.getHistory();
         for (Task task : history) {
             System.out.println(task);
         }

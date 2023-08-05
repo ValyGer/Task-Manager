@@ -39,22 +39,24 @@ public class Main {
         taskManager.getSubtaskById(subtask1.getId()); //id = 5
         taskManager.getEpicById(epic2.getId());       //id = 8
         taskManager.getTaskById(task1.getId());       //id = 1
-// вызов с повторами
-        taskManager.getSubtaskById(subtask2.getId()); //id = 2
+
+//Повторный вызов элементов
+        taskManager.getSubtaskById(subtask2.getId()); //id = 6
         taskManager.getEpicById(epic1.getId());       //id = 4
         taskManager.getTaskById(task3.getId());       //id = 3
         taskManager.getSubtaskById(subtask3.getId()); //id = 7
 
-        taskManager.removeTaskById(task1.getId());    //удаление id = 2
+//Удаление элементов
+        taskManager.removeTaskById(task1.getId());    //удаление id = 1
         taskManager.removeEpicById(epic1.getId());    //удаление id = 4 (5,6,7);
 
         System.out.println();
         System.out.println();
-
+//Вывод истории
         List<Task> history = taskManager.getHistory();
         for (Task task : history) {
             System.out.println(task);
         }
-        // до повторов: 76423581 после повторов: 65812437 после удаления: 813
+        //Ожидаем вывод до повторов: 76423581; после повторов: 25816437; после удаления: 283
     }
 }

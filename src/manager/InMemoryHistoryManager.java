@@ -29,12 +29,13 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
     @Override
     public void addTask(Task task){
-        Node node = new Node(task);
         if (map.get(task.getId()) == null){
+            Node node = new Node(task);
             linkLast(node);
             map.put(task.getId(), node);
         } else {
             removeNode(map.get(task.getId()));
+            linkLast(map.get(task.getId()));
         }
     }
     public void linkLast(Node node){
@@ -48,14 +49,14 @@ public class InMemoryHistoryManager implements HistoryManager {
         }
     }
     public void removeNode(Node node) {
-        if((node.prev == first) && (node.next == last)){
+        if((node.prev == null) && (node.next == null)){
             first = null;
             last = null;
-        } else if((node.next == last) && (node.prev != first)){
+        } else if((node.next == null) && (node.prev != null)){
             node.prev.next = null;
             last = node.prev;
             node.prev = null;
-        } else if((node.prev == first) && (node.next != last)){
+        } else if((node.prev == null) && (node.next != null)){
             node.next.prev = null;
             first = node.next;
             node.next = null;

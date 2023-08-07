@@ -20,15 +20,16 @@ public class InMemoryHistoryManager implements HistoryManager {
         if (first == null) {
             return history;
         }
-        Node node = first;
+        Node node = last; // first
         while (node != null) {
             history.add(node.getValue());
-            node = node.next;
+            node = node.prev;  //next
         }
         return history;
     }
     @Override
     public void addTask(Task task){
+        checkingLengthHistory(task); // перед добавлением новой записис в историю проверяем ее длину
         if (map.get(task.getId()) == null){
             Node node = new Node(task);
             linkLast(node);
@@ -38,6 +39,13 @@ public class InMemoryHistoryManager implements HistoryManager {
             linkLast(map.get(task.getId()));
         }
     }
+    public void checkingLengthHistory (Task task){ // функция проверки длины истории
+        if ((map.size() >= 10) && ((map.get(task.getId()) != null))){
+            map.remove(first.value.getId());
+            removeNode(first);
+        }
+    }
+
     public void linkLast(Node node){
         if (first != null){
             last.next = node;
@@ -64,7 +72,7 @@ public class InMemoryHistoryManager implements HistoryManager {
             node.prev.next = node.next;
             node.next.prev = node.prev;
             node.prev = null;
-            node.prev = null;
+            node.next = null;
         }
     }
     @Override

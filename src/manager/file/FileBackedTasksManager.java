@@ -5,10 +5,40 @@ import task.Epic;
 import task.Subtask;
 import task.Task;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FileBackedTasksManager extends InMemoryTaskManager {
+
+    private File file;
+    // добавить объект класса формата вывода
+    handler = new ...
+
+    private void save() {
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            // верхняя строка
+            writer.write(handler.getFirstString);
+            // запись таксов
+            for (Task task: taskList.values()){
+                writer.write(handler.toString(task));
+                writer.newLine();
+            }
+            // запись эпиков
+            // запись сабтасков
+        } catch (IOException e) {
+            // написать свое исключение!!
+        }
+
+
+
+    }
+
+
     @Override
     public Task createTask(Task task) {
         return super.createTask(task);

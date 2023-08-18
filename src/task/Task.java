@@ -5,12 +5,14 @@ public class Task {
     protected String name;
     protected String description;
     protected TaskStatus status;
+    protected TaskType type;
     private static int generateId = 0;
     public Task(String name, String description) {
         this.id = getGenerateId();
         this.name = name;
         this.description = description;
         this.status = TaskStatus.NEW;
+        this.type = TaskType.TASK;
     }
 
     private int getGenerateId() {

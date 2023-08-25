@@ -8,7 +8,7 @@ public final class Managers {
 
     public static TaskManager getDefault() {
         // return new InMemoryTaskManager();   Выключаем реализацию метода InMemoryTaskManager
-        return new FileBackedTasksManager();   // ПОдключаем реализацию метода FileBackedTasksManager
+        return new FileBackedTasksManager();   // Подключаем реализацию метода FileBackedTasksManager
     }
 
     public static HistoryManager getHistoryDefault() {

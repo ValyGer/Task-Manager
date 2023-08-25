@@ -14,9 +14,19 @@ public class Task {
         this.status = TaskStatus.NEW;
         this.type = TaskType.TASK;
     }
-
+    public Task(Integer id, String name, String description, TaskStatus status, TaskType type) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.status = status;
+        this.type = type;
+    }
     private int getGenerateId() {
         return ++generateId;
+    }
+
+    public TaskType getType() {
+        return type;
     }
 
     public Integer getId() {

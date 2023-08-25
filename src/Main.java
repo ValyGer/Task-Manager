@@ -1,5 +1,6 @@
 import manager.Managers;
 import manager.TaskManager;
+import manager.file.FileBackedTasksManager;
 import task.Epic;
 import task.Subtask;
 import task.Task;
@@ -54,10 +55,12 @@ public class Main {
         taskManager.getTaskById(task3.getId());       //id = 3
         taskManager.getSubtaskById(subtask3.getId()); //id = 7
 //Удаление элементов
-        taskManager.removeTaskById(task1.getId());    //удаление id = 1
+       /* taskManager.removeTaskById(task1.getId());    //удаление id = 1
         taskManager.removeEpicById(epic1.getId());    //удаление id = 4 (5,6,7);
         System.out.println();
         System.out.println();
+
+        */
 //Вывод истории
         List<Task> history = taskManager.getHistory();
         for (Task task : history) {
@@ -65,4 +68,5 @@ public class Main {
         }
         //Ожидаем вывод до повторов: 1 8 11 5 3 10 2 4 6 7; после повторов: 7 3 4 6 9 1 8 11 5 10; после удаления: 3 9 8 11 10
     }
+
 }

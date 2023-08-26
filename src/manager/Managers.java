@@ -1,6 +1,7 @@
 package manager;
 
 import manager.file.FileBackedTasksManager;
+import manager.memory.InMemoryHistoryManager;
 
 public final class Managers {
 

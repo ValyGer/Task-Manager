@@ -55,12 +55,11 @@ public class Main {
         taskManager.getTaskById(task3.getId());       //id = 3
         taskManager.getSubtaskById(subtask3.getId()); //id = 7
 //Удаление элементов
-       /* taskManager.removeTaskById(task1.getId());    //удаление id = 1
+        taskManager.removeTaskById(task1.getId());    //удаление id = 1
         taskManager.removeEpicById(epic1.getId());    //удаление id = 4 (5,6,7);
         System.out.println();
         System.out.println();
 
-        */
 //Вывод истории
         List<Task> history = taskManager.getHistory();
         for (Task task : history) {

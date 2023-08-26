@@ -4,6 +4,7 @@ import manager.HistoryManager;
 import task.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static task.TaskType.EPIC;
@@ -58,7 +59,13 @@ public class CSVFormatHandler {
         return String.join(DELIMITER, result);
     }
 
-    List<Integer> historyFromString(String value) {
-        return null;
+    List<Integer> historyFromString(String rowHistory) {
+        rowHistory = rowHistory.trim(); // удоляем пробелы из строки
+        String[] parts = rowHistory.split(",");
+        Integer[] numberTask = new Integer[parts.length];
+        for (int i = 0; i < parts.length; i++) {
+            numberTask[i] = Integer.parseInt(parts[i]);
+        }
+        return new ArrayList<>(Arrays.asList(numberTask));
     }
 }

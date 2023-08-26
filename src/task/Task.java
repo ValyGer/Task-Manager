@@ -25,6 +25,10 @@ public class Task {
         return ++generateId;
     }
 
+    public static void setGenerateId(int generateId) {
+        Task.generateId = generateId;
+    }
+
     public TaskType getType() {
         return type;
     }
@@ -41,16 +45,8 @@ public class Task {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getDescription() {
         return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public TaskStatus getStatus() {

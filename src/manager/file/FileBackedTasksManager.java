@@ -1,13 +1,12 @@
 package manager.file;
 
-import manager.InMemoryTaskManager;
+import manager.memory.InMemoryTaskManager;
 import task.*;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collections;
 
 public class FileBackedTasksManager extends InMemoryTaskManager {
     static private File file = new File("./resources/manager.csv");
@@ -20,9 +19,43 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     static private CSVFormatHandler handler = new CSVFormatHandler();
 
     public static void main(String[] args) {
-        //File file1 = new File("./resources/manager.csv");
-        loadFromFile(file);
-    }
+        FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager();
+        //Создаем задачи
+        Task task1 = new Task("Задача 1", "Описание задачи 1"); //id = 1
+        Task task2 = new Task("Задача 2", "Описание задачи 2"); //id = 2
+        task1 = fileBackedTasksManager.createTask(task1);
+        task2 = fileBackedTasksManager.createTask(task2);
+
+        Epic epic1 = new Epic("Эпик 1", "Описание эпика 1"); //id = 3
+        epic1 = fileBackedTasksManager.createEpic(epic1);
+        Subtask subtask1 = new Subtask("Подзадача 1", "Описание подзадачи 1", epic1.getId()); //id = 4
+        Subtask subtask2 = new Subtask("Подзадача 2", "Описание подзадачи 2", epic1.getId()); //id = 5
+        subtask1 = fileBackedTasksManager.createSubtask(subtask1);
+        subtask2 = fileBackedTasksManager.createSubtask(subtask2);
+
+        Epic epic2 = new Epic("Эпик 2", "Описание эпика 2"); //id = 6
+        epic2 = fileBackedTasksManager.createEpic(epic2); //Создаем эпик без подзадач
+        //Делаем вызов элементов
+        fileBackedTasksManager.getSubtaskById(subtask2.getId()); //id = 5
+        fileBackedTasksManager.getEpicById(epic1.getId());       //id = 3
+        fileBackedTasksManager.getTaskById(task2.getId());       //id = 2
+        fileBackedTasksManager.getSubtaskById(subtask1.getId()); //id = 4
+        fileBackedTasksManager.getEpicById(epic2.getId());       //id = 6
+        fileBackedTasksManager.getTaskById(task1.getId());       //id = 1
+        //Повторный вызов элементов
+        fileBackedTasksManager.getSubtaskById(subtask2.getId()); //id = 5
+        fileBackedTasksManager.getEpicById(epic1.getId());       //id = 3
+        //Удаление элементов
+        fileBackedTasksManager.removeTaskById(task1.getId());    //удаление id = 1
+//        fileBackedTasksManager.removeEpicById(epic1.getId());    //удаление id = 3 (4,5);
+
+
+        loadFromFile(file); // загрузка приложения из файла
+        // добавление задачи для проверки счетчика id
+        Task task3 = new Task("Задача 3", "Описание задачи 3"); //id = 7
+        task3 = fileBackedTasksManager.createTask(task3);
+        fileBackedTasksManager.getTaskById(task3.getId());       //id = 7
+    }  // main метод тестирования работвы с файлами
 
     private void save() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
@@ -49,16 +82,18 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
             // запись истории просмотров
             writer.write(handler.historyToString(historyManager));
         } catch (IOException e) {
-            System.out.println("Невозможно прочитать файл!");
+            throw new ManagerSaveException("Невозможно прочитать файл!");
         }
     } // метод автосохранения
     static FileBackedTasksManager loadFromFile(File file) {
         FileBackedTasksManager manager = new FileBackedTasksManager(file);
         String fileName = "./resources/" + file.getName();
+        List<Integer> listOfId = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             String line = reader.readLine(); // пропускаем первую строку
-            while (!((line = reader.readLine()).equals(""))) {
+            while (!((line = reader.readLine()).isEmpty())) {
                 Task task = handler.fromString(line);
+                listOfId.add(task.getId());
                 switch (task.getType()) {
                     case TASK:
                         manager.taskList.put(task.getId(), task);
@@ -73,12 +108,21 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
             }
             line = reader.readLine();
             List<Integer> numberTaskInHistory = handler.historyFromString(line);
-//            for (Integer id: numberTaskInHistory) {
-//                manager.historyManager.addTask(task.getTaskById(id));
-//            }
-            List<Task> history = new ArrayList<>();
+            for (int id: numberTaskInHistory) {
+                if (manager.taskList.containsKey(id)) {
+                    Task task = manager.taskList.get(id);
+                    manager.historyManager.addTask((task));
+                } else if (manager.epicList.containsKey(id)) {
+                    Epic epic = manager.epicList.get(id);
+                    manager.historyManager.addTask((epic));
+                } else {
+                    Subtask subtask = manager.subtaskList.get(id);
+                    manager.historyManager.addTask((subtask));
+                }
+            }
+            Task.setGenerateId(Collections.max(listOfId)); // обновляем информацию по счетчику id
         } catch (IOException e) {
-            System.out.println("Невозможно прочитать файл с менеджером. Возможно, файл отсутствует в нужной директории.");
+            throw new ManagerSaveException("Невозможно прочитать файл с менеджером. Возможно, файл отсутствует в нужной директории.");
         }
     return manager;
     }

@@ -1,5 +1,6 @@
-package manager;
+package manager.memory;
 
+import manager.HistoryManager;
 import task.Task;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +30,7 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
     @Override
     public void addTask(Task task){
-        checkingLengthHistory(task); // перед добавлением новой записис в историю проверяем ее длину
+        checkingLengthHistory(task); // перед добавлением новой записи в историю проверяем ее длину
         if (map.get(task.getId()) == null){
             Node node = new Node(task);
             linkLast(node);

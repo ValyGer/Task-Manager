@@ -51,11 +51,10 @@ public class InMemoryHistoryManager implements HistoryManager {
         if (first != null){
             last.next = node;
             node.prev = last;
-            last = node;
         } else {
             first = node;
-            last = node;
         }
+        last = node;
     }
     public void removeNode(Node node) {
         if((node.prev == null) && (node.next == null)){

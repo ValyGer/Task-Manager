@@ -40,14 +40,11 @@ public class CSVFormatHandler {
             epicId = Integer.parseInt(parts[5]);
         }
         if (taskType.equals(TASK)) {
-            Task task = new Task(id, taskName, description, taskStatus, taskType);
-            return task;
+            return new Task(id, taskName, description, taskStatus, taskType);
         } else if (taskType.equals(EPIC)) {
-            Epic epic = new Epic(id, taskName, description, taskStatus, taskType);
-            return epic;
+            return new Epic(id, taskName, description, taskStatus, taskType);
         } else {
-            Subtask subtask = new Subtask(id, taskName, description, taskStatus, taskType, epicId);
-            return subtask;
+            return new Subtask(id, taskName, description, taskStatus, taskType, epicId);
         }
     }
 

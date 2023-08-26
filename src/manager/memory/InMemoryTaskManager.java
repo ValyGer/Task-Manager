@@ -100,19 +100,19 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void removeEpicById(Integer id) { // удаление эпика по идентификатору!!! проверять
+    public void removeEpicById(Integer id) { // удаление эпика по идентификатору!!!
         ArrayList<Subtask> listSubtasksInEpic = getListSubtaskInEpic(id);
         if (listSubtasksInEpic == null) {
             historyManager.remove(id);
         } else {
            for (Subtask subtask: listSubtasksInEpic){
                historyManager.remove(subtask.getId());
+               subtaskList.remove(subtask.getId());
            }
         }
         historyManager.remove(id);
         epicList.remove(id);
     }
-
     @Override
     public void updateEpic(Epic epic) { // обновление epic
         Epic saved = epicList.get(epic.getId());
@@ -121,7 +121,6 @@ public class InMemoryTaskManager implements TaskManager {
         }
         epicList.put(epic.getId(), epic);
     }
-
     private void updateEpicStatus(Subtask subtask) { // обновление статуса epic
         Epic epic = epicList.get(subtask.getEpicId());
         ArrayList<Subtask> listSubtasks = epic.getSubtask();
@@ -147,14 +146,12 @@ public class InMemoryTaskManager implements TaskManager {
             }
         }
     }
-
     @Override
     public ArrayList<Subtask> getListSubtaskInEpic(Integer id) { // получение списка subtask в epic
         Epic epic = epicList.get(id);
         ArrayList<Subtask> listSubtasksInEpic = epic.getSubtask();
         return listSubtasksInEpic;
     }
-
 
     // ОБработка subtask
     @Override

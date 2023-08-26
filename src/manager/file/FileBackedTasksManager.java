@@ -9,15 +9,10 @@ import java.util.List;
 import java.util.Collections;
 
 public class FileBackedTasksManager extends InMemoryTaskManager {
-    static private File file = new File("./resources/manager.csv");
-
+    static private final File file = new File("./resources/manager.csv");
     public FileBackedTasksManager() {
     }
-    public FileBackedTasksManager(File file) {
-        this.file = file;
-    }
-    static private CSVFormatHandler handler = new CSVFormatHandler();
-
+    static private final CSVFormatHandler handler = new CSVFormatHandler();
     public static void main(String[] args) {
         FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager();
         //Создаем задачи
@@ -47,8 +42,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         fileBackedTasksManager.getEpicById(epic1.getId());       //id = 3
         //Удаление элементов
         fileBackedTasksManager.removeTaskById(task1.getId());    //удаление id = 1
-//        fileBackedTasksManager.removeEpicById(epic1.getId());    //удаление id = 3 (4,5);
-
+        fileBackedTasksManager.removeEpicById(epic1.getId());    //удаление id = 3 (4,5);
 
         loadFromFile(file); // загрузка приложения из файла
         // добавление задачи для проверки счетчика id
@@ -56,7 +50,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         task3 = fileBackedTasksManager.createTask(task3);
         fileBackedTasksManager.getTaskById(task3.getId());       //id = 7
     }  // main метод тестирования работвы с файлами
-
     private void save() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
                 // верхняя строка
@@ -86,11 +79,12 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         }
     } // метод автосохранения
     static FileBackedTasksManager loadFromFile(File file) {
-        FileBackedTasksManager manager = new FileBackedTasksManager(file);
+        FileBackedTasksManager manager = new FileBackedTasksManager();
         String fileName = "./resources/" + file.getName();
         List<Integer> listOfId = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
-            String line = reader.readLine(); // пропускаем первую строку
+            reader.readLine(); // пропускаем первую строку
+            String line;
             while (!((line = reader.readLine()).isEmpty())) {
                 Task task = handler.fromString(line);
                 listOfId.add(task.getId());
@@ -106,8 +100,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                         break;
                 }
             }
-            line = reader.readLine();
-            List<Integer> numberTaskInHistory = handler.historyFromString(line);
+            List<Integer> numberTaskInHistory = handler.historyFromString(reader.readLine());
             for (int id: numberTaskInHistory) {
                 if (manager.taskList.containsKey(id)) {
                     Task task = manager.taskList.get(id);
@@ -133,33 +126,28 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         save();
         return task;
     }
-
     @Override
     public ArrayList<Task> getAllTasks() {
         ArrayList<Task> allTask = super.getAllTasks();
         save();
         return allTask;
     }
-
     @Override
     public void removeAllTasks() {
         super.removeAllTasks();
         save();
     }
-
     @Override
     public Task getTaskById(Integer id) {
         Task task = super.getTaskById(id);
         save();
         return task;
     }
-
     @Override
     public void removeTaskById(Integer id) {
         super.removeTaskById(id);
         save();
     }
-
     @Override
     public void updateTask(Task task) {
         super.updateTask(task);
@@ -172,39 +160,33 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         save();
         return epic;
     }
-
     @Override
     public ArrayList<Epic> getAllEpics() {
         ArrayList<Epic> allEpic = super.getAllEpics();
         save();
         return allEpic;
     }
-
     @Override
     public void removeAllEpics() {
         super.removeAllEpics();
         save();
     }
-
-    @Override
+     @Override
     public Epic getEpicById(Integer id) {
         Epic epic = super.getEpicById(id);
         save();
         return epic;
     }
-
     @Override
     public void removeEpicById(Integer id) {
         super.removeEpicById(id);
         save();
     }
-
     @Override
     public void updateEpic(Epic epic) {
         super.updateEpic(epic);
         save();
     }
-
     @Override
     public ArrayList<Subtask> getListSubtaskInEpic(Integer id) {
         ArrayList<Subtask> listSubtaskInEpic = super.getListSubtaskInEpic(id);
@@ -218,33 +200,28 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         save();
         return subtask;
     }
-
     @Override
     public ArrayList<Subtask> getAllSubtasks() {
         ArrayList<Subtask> allSubtask = super.getAllSubtasks();
         save();
         return allSubtask;
     }
-
     @Override
     public void removeAllSubtasks() {
         super.removeAllSubtasks();
         save();
     }
-
     @Override
     public void removeSubtaskById(Integer id) {
         super.removeSubtaskById(id);
         save();
     }
-
     @Override
     public Subtask getSubtaskById(Integer id) {
         Subtask subtask = super.getSubtaskById(id);
         save();
         return subtask;
     }
-
     @Override
     public void updateSubtask(Subtask subtask) {
         super.updateSubtask(subtask);

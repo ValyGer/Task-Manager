@@ -1,8 +1,14 @@
 package task;
 
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class Epic extends Task {
+
+    private LocalDate endTime;
     private ArrayList<Subtask> subtasks;
     //Откорректирован список сабтасков. В списке сохраняем сами самбатаски а не их ID
 
@@ -12,13 +18,18 @@ public class Epic extends Task {
     }
 
     public Epic(Integer id, String name, String description, TaskStatus status, TaskType type) {
-        super(id, name, description, status, type);
+        super(id, name, description, status, type, "2999.01.01", 0);
     }
+
     public ArrayList<Subtask> getSubtask() {
         return subtasks;
     }
     public void setSubtask(ArrayList<Subtask> subtasks) {
         this.subtasks = subtasks;
+    }
+
+    public void setEndTime(LocalDate endTime) {
+        this.endTime = endTime;
     }
 
     @Override
@@ -30,4 +41,5 @@ public class Epic extends Task {
                 ", status='" + status + '\'' +
                 '}';
     }
+
 }

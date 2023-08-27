@@ -10,13 +10,11 @@ import java.util.Collections;
 
 public class FileBackedTasksManager extends InMemoryTaskManager {
     private final File file;
-
-    public FileBackedTasksManager() {
-        this.file = new File("./resources/manager.csv");
+    public FileBackedTasksManager(File file) {
+        this.file = file;
     }
-
     public static void main(String[] args) {
-        FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager();
+        FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager(new File("./resources/manager.csv"));
         //Создаем задачи
         Task task1 = new Task("Задача 1", "Описание задачи 1"); //id = 1
         Task task2 = new Task("Задача 2", "Описание задачи 2"); //id = 2
@@ -44,7 +42,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         fileBackedTasksManager.getEpicById(epic1.getId());       //id = 3
         //Удаление элементов
         fileBackedTasksManager.removeTaskById(task1.getId());    //удаление id = 1
-        fileBackedTasksManager.removeEpicById(epic1.getId());    //удаление id = 3 (4,5);
+       // fileBackedTasksManager.removeEpicById(epic1.getId());    //удаление id = 3 (4,5);
 
         loadFromFile(fileBackedTasksManager.file); // загрузка приложения из файла
         // добавление задачи для проверки счетчика id
@@ -81,7 +79,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         }
     } // метод автосохранения
     static FileBackedTasksManager loadFromFile(File file) {
-        FileBackedTasksManager manager = new FileBackedTasksManager();
+        FileBackedTasksManager manager = new FileBackedTasksManager(file);
         String fileName = "./resources/" + file.getName();
         List<Integer> listOfId = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
@@ -190,10 +188,28 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         save();
     }
     @Override
+    public void updateEpicStatus(Subtask subtask){
+        super.updateEpicStatus(subtask);
+        save();
+    }
+    @Override
     public ArrayList<Subtask> getListSubtaskInEpic(Integer id) {
         ArrayList<Subtask> listSubtaskInEpic = super.getListSubtaskInEpic(id);
         save();
         return listSubtaskInEpic;
+    }
+
+    @Override
+    public void updateEpicTime(Subtask subtask){
+        super.updateEpicTime(subtask);
+    }
+    @Override
+    public void getStartTime(Epic epic) {
+        super.getStartTime(epic);
+    }
+    @Override
+    public void getDuration(Epic epic){
+        super.getDuration(epic);
     }
 
     @Override

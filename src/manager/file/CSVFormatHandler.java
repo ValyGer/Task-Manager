@@ -12,10 +12,10 @@ import static task.TaskType.TASK;
 
 public class CSVFormatHandler {
     private static final String DELIMITER = ",";
-    String getFirstString() {
+    static String getFirstString() {
         return "id,type,name,status,description,epic";
     }
-    String toString(Task task) {
+    static String toString(Task task) {
         String result = task.getId() + DELIMITER +
                task.getType() + DELIMITER +
                task.getName() + DELIMITER +
@@ -26,8 +26,7 @@ public class CSVFormatHandler {
         }
         return result;
     }
-
-    Task fromString(String row) {
+    static Task fromString(String row) {
         row = row.trim(); // удоляем пробелы из строки
         String[] parts = row.split(",");  // разбиваем строку на массив строк по элементу ","
         int id = Integer.parseInt(parts[0]);     //  присваиваем переменным элементы массива
@@ -47,16 +46,14 @@ public class CSVFormatHandler {
             return new Subtask(id, taskName, description, taskStatus, taskType, epicId);
         }
     }
-
-    String historyToString(HistoryManager historyManager) {
+    static String historyToString(HistoryManager historyManager) {
         List<String> result = new ArrayList<>();
         for (Task task: historyManager.getHistory()) {
             result.add(String.valueOf(task.getId()));
         }
         return String.join(DELIMITER, result);
     }
-
-    List<Integer> historyFromString(String rowHistory) {
+    static List<Integer> historyFromString(String rowHistory) {
         rowHistory = rowHistory.trim(); // удоляем пробелы из строки
         String[] parts = rowHistory.split(",");
         Integer[] numberTask = new Integer[parts.length];

@@ -12,7 +12,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     static private final File file = new File("./resources/manager.csv");
     public FileBackedTasksManager() {
     }
-    static private final CSVFormatHandler handler = new CSVFormatHandler();
     public static void main(String[] args) {
         FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager();
         //Создаем задачи
@@ -53,27 +52,27 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     private void save() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
                 // верхняя строка
-            writer.write(handler.getFirstString());
+            writer.write(CSVFormatHandler.getFirstString());
             writer.newLine();
                 // запись таксов
             for (Task task: taskList.values()){
-                writer.write(handler.toString(task));
+                writer.write(CSVFormatHandler.toString(task));
                 writer.newLine();
             }
                 // запись эпиков
             for (Epic epic: epicList.values()){
-                writer.write(handler.toString(epic));
+                writer.write(CSVFormatHandler.toString(epic));
                 writer.newLine();
             }
                 // запись сабтасков
             for (Subtask subtask: subtaskList.values()){
-                writer.write(handler.toString(subtask));
+                writer.write(CSVFormatHandler.toString(subtask));
                 writer.newLine();
             }
             // пишем пустую строку
             writer.newLine();
             // запись истории просмотров
-            writer.write(handler.historyToString(historyManager));
+            writer.write(CSVFormatHandler.historyToString(historyManager));
         } catch (IOException e) {
             throw new ManagerSaveException("Невозможно прочитать файл!");
         }
@@ -86,7 +85,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
             reader.readLine(); // пропускаем первую строку
             String line;
             while (!((line = reader.readLine()).isEmpty())) {
-                Task task = handler.fromString(line);
+                Task task = CSVFormatHandler.fromString(line);
                 listOfId.add(task.getId());
                 switch (task.getType()) {
                     case TASK:
@@ -100,7 +99,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                         break;
                 }
             }
-            List<Integer> numberTaskInHistory = handler.historyFromString(reader.readLine());
+            List<Integer> numberTaskInHistory = CSVFormatHandler.historyFromString(reader.readLine());
             for (int id: numberTaskInHistory) {
                 if (manager.taskList.containsKey(id)) {
                     Task task = manager.taskList.get(id);

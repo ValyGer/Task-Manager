@@ -10,13 +10,11 @@ import java.util.Collections;
 
 public class FileBackedTasksManager extends InMemoryTaskManager {
     private final File file;
-
-    public FileBackedTasksManager() {
-        this.file = new File("./resources/manager.csv");
+    public FileBackedTasksManager(File file) {
+        this.file = file;
     }
-
     public static void main(String[] args) {
-        FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager();
+        FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager(new File("./resources/manager.csv"));
         //Создаем задачи
         Task task1 = new Task("Задача 1", "Описание задачи 1"); //id = 1
         Task task2 = new Task("Задача 2", "Описание задачи 2"); //id = 2
@@ -81,7 +79,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         }
     } // метод автосохранения
     static FileBackedTasksManager loadFromFile(File file) {
-        FileBackedTasksManager manager = new FileBackedTasksManager();
+        FileBackedTasksManager manager = new FileBackedTasksManager(file);
         String fileName = "./resources/" + file.getName();
         List<Integer> listOfId = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {

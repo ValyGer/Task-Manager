@@ -9,9 +9,12 @@ import java.util.List;
 import java.util.Collections;
 
 public class FileBackedTasksManager extends InMemoryTaskManager {
-    static private final File file = new File("./resources/manager.csv");
+    private final File file;
+
     public FileBackedTasksManager() {
+        this.file = new File("./resources/manager.csv");
     }
+
     public static void main(String[] args) {
         FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager();
         //Создаем задачи
@@ -43,7 +46,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         fileBackedTasksManager.removeTaskById(task1.getId());    //удаление id = 1
         fileBackedTasksManager.removeEpicById(epic1.getId());    //удаление id = 3 (4,5);
 
-        loadFromFile(file); // загрузка приложения из файла
+        loadFromFile(fileBackedTasksManager.file); // загрузка приложения из файла
         // добавление задачи для проверки счетчика id
         Task task3 = new Task("Задача 3", "Описание задачи 3"); //id = 7
         task3 = fileBackedTasksManager.createTask(task3);

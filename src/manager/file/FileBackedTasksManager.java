@@ -4,9 +4,8 @@ import manager.memory.InMemoryTaskManager;
 import task.*;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Collections;
+import java.time.LocalDate;
+import java.util.*;
 
 public class FileBackedTasksManager extends InMemoryTaskManager {
     private final File file;
@@ -118,6 +117,12 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
             throw new ManagerSaveException("Невозможно прочитать файл с менеджером. Возможно, файл отсутствует в нужной директории.");
         }
     return manager;
+    }
+
+    @Override
+    public Set<Task> getPrioritizedTasks() {
+        Set<Task> prioritizedTasks = super.getPrioritizedTasks();
+        return prioritizedTasks;
     }
 
     @Override

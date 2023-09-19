@@ -6,6 +6,7 @@ import task.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,6 +21,9 @@ public abstract class TaskManagerTest <T extends TaskManager> {
         taskManager.createTask(task1);
         assertNotNull(taskManager.getTaskById(1), "Задача не создана");
         assertEquals(task1, taskManager.getTaskById(1), "Создается задача с иным содержанием");
+        Set<Task> prioritizedTasks = taskManager.getPrioritizedTasks();
+        assertNotNull(prioritizedTasks, "Список задач по приоритетам не создан");
+        assertEquals(1, prioritizedTasks.size(), "Список задач по приоритетам имеет неверную длину");
     }
     @Test
     void getAllTaskTest() {
@@ -178,6 +182,9 @@ public abstract class TaskManagerTest <T extends TaskManager> {
         taskManager.createSubtask(subtask1);
         assertNotNull(taskManager.getSubtaskById(2), "Задача не создана");
         assertEquals(subtask1, taskManager.getSubtaskById(2), "Создается задача с иным содержанием");
+        Set<Task> prioritizedTasks = taskManager.getPrioritizedTasks();
+        assertNotNull(prioritizedTasks, "Список задач по приоритетам не создан");
+        assertEquals(1, prioritizedTasks.size(), "Список задач по приоритетам имеет неверную длину");
     }
     @Test
     void getAllSubtasksTest(){
@@ -271,5 +278,17 @@ public abstract class TaskManagerTest <T extends TaskManager> {
         taskManager.getTaskById(1);
         assertNotNull(taskManager.getHistory(), "История не возвращается");
         assertEquals(2, taskManager.getHistory().size(), "Длина истории не соотвесвтует ожидаемой");
+    }
+
+    @Test
+    void getPrioritizedTasks(){
+        Task task1 = new Task(1, "Задача 1", "Описание задачи 1", TaskStatus.NEW, TaskType.TASK, "2023.09.12", 600); //id = 1
+        Task task2 = new Task(2, "Задача 2", "Описание задачи 2", TaskStatus.NEW, TaskType.TASK, "2023.09.14", 1000); //id = 2
+        taskManager.createTask(task1);
+        taskManager.createTask(task2);
+        Set<Task> prioritizedTasks = taskManager.getPrioritizedTasks();
+        assertNotNull(prioritizedTasks, "Список задач по приоритетам не создан");
+        assertEquals(2, prioritizedTasks.size(), "Список задач по приоритетам имеет неверную длину");
+//        assertEquals(task1, prioritizedTasks.);
     }
 }

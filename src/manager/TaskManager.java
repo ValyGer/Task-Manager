@@ -4,11 +4,15 @@ import task.Epic;
 import task.Subtask;
 import task.Task;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public interface TaskManager {
 
+    public Set<Task> getPrioritizedTasks();
     // Обработка task
     Task createTask(Task task);
     ArrayList<Task> getAllTasks();

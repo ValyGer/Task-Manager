@@ -3,8 +3,10 @@ package manager.memory;
 import manager.HistoryManager;
 import manager.Managers;
 import manager.TaskManager;
-import manager.exception.TaskValidationException;
-import task.*;
+import task.Epic;
+import task.Subtask;
+import task.Task;
+import task.TaskStatus;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -32,10 +34,12 @@ public class InMemoryTaskManager implements TaskManager {
         prioritizedTasks.add(task);
         return task;
     }
+
     @Override
     public ArrayList<Task> getAllTasks() { // получение списка всех задач
         return new ArrayList(taskList.values());
     }
+
     @Override
     public void removeAllTasks() { // удавление списка всех задач
         for (Task task : taskList.values()) {
@@ -45,18 +49,21 @@ public class InMemoryTaskManager implements TaskManager {
         taskList.clear();
 
     }
+
     @Override
     public Task getTaskById(Integer id) { // получение задачи по идентифекатору
         Task task = taskList.get(id);
         historyManager.addTask(task);
         return task;
     }
+
     @Override
     public void removeTaskById(Integer id) { // удаление задачи по идентификатору
         historyManager.remove(id);
         prioritizedTasks.remove(taskList.get(id));
         taskList.remove(id);
     }
+
     @Override
     public void updateTask(Task task) { // обновление task
         Task saved = taskList.get(task.getId());
@@ -75,10 +82,12 @@ public class InMemoryTaskManager implements TaskManager {
         epic.setSubtask(listSubtasks);
         return epic;
     }
+
     @Override
     public ArrayList<Epic> getAllEpics() { // получение списка всех эпиков
         return new ArrayList(epicList.values());
     }
+
     @Override
     public void removeAllEpics() { // удавление списка всех эпиков
         for (Task epic : epicList.values()) {
@@ -94,12 +103,14 @@ public class InMemoryTaskManager implements TaskManager {
         }
         epicList.clear();
     }
+
     @Override
     public Epic getEpicById(Integer id) { // получение эпика по идентифекатору
         Epic epic = epicList.get(id);
         historyManager.addTask(epic);
         return epic;
     }
+
     @Override
     public void removeEpicById(Integer id) { // удаление эпика по идентификатору!!!
         ArrayList<Subtask> listSubtasksInEpic = getListSubtaskInEpic(id);
@@ -114,6 +125,7 @@ public class InMemoryTaskManager implements TaskManager {
         historyManager.remove(id);
         epicList.remove(id);
     }
+
     @Override
     public void updateEpic(Epic epic) { // обновление epic
         Epic saved = epicList.get(epic.getId());
@@ -122,6 +134,7 @@ public class InMemoryTaskManager implements TaskManager {
         }
         epicList.put(epic.getId(), epic);
     }
+
     @Override
     public void updateEpicStatus(Subtask subtask) { // обновление статуса epic
         Epic epic = epicList.get(subtask.getEpicId());
@@ -148,12 +161,14 @@ public class InMemoryTaskManager implements TaskManager {
             }
         }
     }
+
     @Override
     public ArrayList<Subtask> getListSubtaskInEpic(Integer id) { // получение списка subtask в epic
         Epic epic = epicList.get(id);
         ArrayList<Subtask> listSubtasksInEpic = epic.getSubtask();
         return listSubtasksInEpic;
     }
+
     @Override
     public void updateEpicTime(Subtask subtask) {
         Epic epic = epicList.get(subtask.getEpicId());
@@ -161,6 +176,7 @@ public class InMemoryTaskManager implements TaskManager {
         getDuration(epic);
 
     }
+
     public void getStartTime(Epic epic) {
         ArrayList<Subtask> subtasks = getListSubtaskInEpic(epic.getId());
         LocalDate startTime = Task.START_TIME_TASK;
@@ -176,6 +192,7 @@ public class InMemoryTaskManager implements TaskManager {
         }
         epic.setStartTime(startTime.format(formatter));
     }
+
     public void getDuration(Epic epic) {
         ArrayList<Subtask> subtasks = getListSubtaskInEpic(epic.getId());
         Duration durationOfEpic = Task.DURATION_TASK;
@@ -186,7 +203,7 @@ public class InMemoryTaskManager implements TaskManager {
                 durationOfEpic = durationOfEpic.plus(subtask.getDuration());
             }
         }
-        epic.setDuration((int)durationOfEpic.toMinutes());
+        epic.setDuration((int) durationOfEpic.toMinutes());
     }
 
     public LocalDate setEndTime(Epic epic) {
@@ -219,19 +236,22 @@ public class InMemoryTaskManager implements TaskManager {
         updateEpicTime(subtask);
         return subtask;
     }
+
     private void addSubtaskToEpic(Subtask subtask) { // внесение ID subtask в список подзадач Epic
         Epic epic = epicList.get(subtask.getEpicId());
         ArrayList<Subtask> listSubtasks = epic.getSubtask();
         listSubtasks.add(subtask);
         epic.setSubtask(listSubtasks);
     }
+
     @Override
     public ArrayList<Subtask> getAllSubtasks() { // получение списка всех subtask
         return new ArrayList(subtaskList.values());
     }
+
     @Override
     public void removeAllSubtasks() { // удавление списка всех subtask
-        for(Task subtask: subtaskList.values()){
+        for (Task subtask : subtaskList.values()) {
             historyManager.remove(subtask.getId());
             prioritizedTasks.remove(subtask);
         }
@@ -242,6 +262,7 @@ public class InMemoryTaskManager implements TaskManager {
         }
         subtaskList.clear();
     }
+
     @Override
     public void removeSubtaskById(Integer id) { // удаление subtask по идентификатору
         historyManager.remove(id);
@@ -250,6 +271,7 @@ public class InMemoryTaskManager implements TaskManager {
         updateEpicStatus(subtaskList.get(id));
         subtaskList.remove(id);
     }
+
     @Override
     public Subtask getSubtaskById(Integer id) { // получение subtask по идентифекатору
         Subtask subtask = subtaskList.get(id);
@@ -277,6 +299,7 @@ public class InMemoryTaskManager implements TaskManager {
         updateEpicStatus(subtask);
         updateEpicTime(subtask);
     }
+
     @Override
     public List<Task> getHistory() {
         return historyManager.getHistory();

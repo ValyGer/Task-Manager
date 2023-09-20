@@ -1,10 +1,7 @@
 package task;
 
-import java.time.Duration;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class Epic extends Task {
 
@@ -24,6 +21,7 @@ public class Epic extends Task {
     public ArrayList<Subtask> getSubtask() {
         return subtasks;
     }
+
     public void setSubtask(ArrayList<Subtask> subtasks) {
         this.subtasks = subtasks;
     }
@@ -41,5 +39,4 @@ public class Epic extends Task {
                 ", status='" + status + '\'' +
                 '}';
     }
-
 }

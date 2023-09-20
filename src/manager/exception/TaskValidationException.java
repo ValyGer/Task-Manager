@@ -1,6 +1,6 @@
 package manager.exception;
 
-public class TaskValidationException extends RuntimeException{
+public class TaskValidationException extends RuntimeException {
     public TaskValidationException() {
     }
 

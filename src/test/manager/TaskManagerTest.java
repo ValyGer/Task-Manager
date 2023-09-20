@@ -3,14 +3,13 @@ package manager;
 import org.junit.jupiter.api.Test;
 import task.*;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public abstract class TaskManagerTest <T extends TaskManager> {
+public abstract class TaskManagerTest<T extends TaskManager> {
     protected T taskManager;
 
     // тесты проверки работы методов с task
@@ -25,6 +24,7 @@ public abstract class TaskManagerTest <T extends TaskManager> {
         assertNotNull(prioritizedTasks, "Список задач по приоритетам не создан");
         assertEquals(1, prioritizedTasks.size(), "Список задач по приоритетам имеет неверную длину");
     }
+
     @Test
     void getAllTaskTest() {
         assertEquals(0, taskManager.getAllTasks().size(), "Список задач должен быть пустым.");
@@ -36,6 +36,7 @@ public abstract class TaskManagerTest <T extends TaskManager> {
         assertEquals(1, tasks.size(), "Неверное количество задач");
         assertEquals(task1, tasks.get(0), "Задача в списке не совпадает с созданной");
     }
+
     @Test
     void removeAllTasksTest() {
         assertEquals(0, taskManager.getAllTasks().size(), "Список задач должен быть пустым.");
@@ -47,6 +48,7 @@ public abstract class TaskManagerTest <T extends TaskManager> {
         List<Task> tasks = taskManager.getAllTasks();
         assertTrue(tasks.isEmpty(), "Не все задачи были удалены");
     }
+
     @Test
     void getTaskByIdTest() {
         assertEquals(0, taskManager.getAllTasks().size(), "Список задач должен быть пустым.");
@@ -55,6 +57,7 @@ public abstract class TaskManagerTest <T extends TaskManager> {
         assertNotNull(taskManager.getTaskById(1), "Задача не получена, возвращен null");
         assertEquals(taskManager.getTaskById(1), task1, "Задачи не соответсвуют друг другу");
     }
+
     @Test
     void removeTaskByIdTest() {
         assertEquals(0, taskManager.getAllTasks().size(), "Список задач должен быть пустым.");
@@ -64,6 +67,7 @@ public abstract class TaskManagerTest <T extends TaskManager> {
         taskManager.removeTaskById(1);
         assertTrue(taskManager.getAllTasks().isEmpty(), "Задача не была удалена из списка");
     }
+
     @Test
     void updateTaskTest() {
         assertEquals(0, taskManager.getAllTasks().size(), "Список задач должен быть пустым.");
@@ -91,6 +95,7 @@ public abstract class TaskManagerTest <T extends TaskManager> {
         assertNotNull(taskManager.getEpicById(1), "Эпик не создана");
         assertEquals(epic1, taskManager.getEpicById(1), "Создается эпик с иным содержанием");
     }
+
     @Test
     void getAllEpicTest() {
         assertEquals(0, taskManager.getAllEpics().size(), "Список эпиков должен быть пустым.");
@@ -102,6 +107,7 @@ public abstract class TaskManagerTest <T extends TaskManager> {
         assertEquals(1, epics.size(), "Неверное количество эпиков");
         assertEquals(epic1, epics.get(0), "Эпик в списке не совпадает с созданным");
     }
+
     @Test
     void removeAllEpicsTest() {
         assertEquals(0, taskManager.getAllEpics().size(), "Список эпиков должен быть пустым.");
@@ -113,6 +119,7 @@ public abstract class TaskManagerTest <T extends TaskManager> {
         List<Epic> epics = taskManager.getAllEpics();
         assertTrue(epics.isEmpty(), "Не все задачи были удалены");
     }
+
     @Test
     void getEpicByIdTest() {
         assertEquals(0, taskManager.getAllEpics().size(), "Список эпиков должен быть пустым.");
@@ -122,6 +129,7 @@ public abstract class TaskManagerTest <T extends TaskManager> {
         assertNotNull(epic, "Эпик не получен");
         assertEquals(epic1, epic, "Эпики не соотвутсвуют друг другу");
     }
+
     @Test
     void removeEpicByIdTest() {
         assertEquals(0, taskManager.getAllEpics().size(), "Список эпиков должен быть пустым.");
@@ -131,22 +139,24 @@ public abstract class TaskManagerTest <T extends TaskManager> {
         taskManager.removeEpicById(1);
         assertTrue(taskManager.getAllEpics().isEmpty(), "Эпик не был удален из списка");
     }
+
     @Test
-    void getListSubtaskInEpicTest(){
+    void getListSubtaskInEpicTest() {
         assertEquals(0, taskManager.getAllEpics().size(), "Список эпиков должен быть пустым.");
         Epic epic1 = new Epic(1, "Эпик 1", "Описание эпика 1", TaskStatus.NEW, TaskType.EPIC);
         taskManager.createEpic(epic1);
         ArrayList<Subtask> subtasksInEpic = taskManager.getListSubtaskInEpic(epic1.getId());
         assertNotNull(subtasksInEpic, "Список сабтасков не возвращен");
         assertTrue(subtasksInEpic.isEmpty(), "Список сабтасоков не пустой");
-        Subtask subtask1 = new Subtask(2, "Сабтаск 1", "Описание сабтаска 1", TaskStatus.NEW, TaskType.SUBTASK, "2023.09.15",600, epic1.getId());
+        Subtask subtask1 = new Subtask(2, "Сабтаск 1", "Описание сабтаска 1", TaskStatus.NEW, TaskType.SUBTASK, "2023.09.15", 600, epic1.getId());
         taskManager.createSubtask(subtask1);
         subtasksInEpic = taskManager.getListSubtaskInEpic(epic1.getId());
         assertEquals(1, subtasksInEpic.size(), "Дллина списка подзадач не соотвествтует");
         assertEquals(subtask1, subtasksInEpic.get(0), "Подзадачи не совпадают");
     }
+
     @Test
-    void updateEpicTest(){
+    void updateEpicTest() {
         assertEquals(0, taskManager.getAllEpics().size(), "Список эпиков должен быть пустым.");
         Epic epic1 = new Epic(1, "Эпик 1", "Описание эпика 1", TaskStatus.NEW, TaskType.EPIC);
         taskManager.createEpic(epic1);
@@ -161,24 +171,25 @@ public abstract class TaskManagerTest <T extends TaskManager> {
         assertEquals(epic1.getDuration(), taskManager.getEpicById(1).getDuration(), "Продолжительность выполнения эпиков не совподает");
         assertEquals("Описание эпика 1 изменено", taskManager.getEpicById(1).getDescription(), "Описнаие эпиков обновлено не корректно");
     }
+
     @Test
     void updateEpicTimeTest() {
         assertEquals(0, taskManager.getAllEpics().size(), "Список эпиков должен быть пустым.");
         Epic epic1 = new Epic(1, "Эпик 1", "Описание эпика 1", TaskStatus.NEW, TaskType.EPIC);
         taskManager.createEpic(epic1);
-        Subtask subtask1 = new Subtask(2, "Сабтаск 1", "Описание сабтаска 1", TaskStatus.NEW, TaskType.SUBTASK, "2023.09.15",600, epic1.getId());
+        Subtask subtask1 = new Subtask(2, "Сабтаск 1", "Описание сабтаска 1", TaskStatus.NEW, TaskType.SUBTASK, "2023.09.15", 600, epic1.getId());
         taskManager.createSubtask(subtask1);
         assertEquals(subtask1.getStartTime(), epic1.getStartTime(), "Время не обнавлено");
     }
 
     // тесты проверки работы методов с subtask
     @Test
-    void createSubtaskTest(){
+    void createSubtaskTest() {
         assertEquals(0, taskManager.getAllEpics().size(), "Список эпиков должен быть пустым.");
         assertEquals(0, taskManager.getAllSubtasks().size(), "Список сабтасков должен быть пустым.");
         Epic epic1 = new Epic(1, "Эпик 1", "Описание эпика 1", TaskStatus.NEW, TaskType.EPIC);
         taskManager.createEpic(epic1);
-        Subtask subtask1 = new Subtask(2, "Сабтаск 1", "Описание сабтаска 1", TaskStatus.NEW, TaskType.SUBTASK, "2023.09.15",600, epic1.getId());
+        Subtask subtask1 = new Subtask(2, "Сабтаск 1", "Описание сабтаска 1", TaskStatus.NEW, TaskType.SUBTASK, "2023.09.15", 600, epic1.getId());
         taskManager.createSubtask(subtask1);
         assertNotNull(taskManager.getSubtaskById(2), "Задача не создана");
         assertEquals(subtask1, taskManager.getSubtaskById(2), "Создается задача с иным содержанием");
@@ -186,29 +197,31 @@ public abstract class TaskManagerTest <T extends TaskManager> {
         assertNotNull(prioritizedTasks, "Список задач по приоритетам не создан");
         assertEquals(1, prioritizedTasks.size(), "Список задач по приоритетам имеет неверную длину");
     }
+
     @Test
-    void getAllSubtasksTest(){
+    void getAllSubtasksTest() {
         assertEquals(0, taskManager.getAllEpics().size(), "Список эпиков должен быть пустым.");
         assertEquals(0, taskManager.getAllSubtasks().size(), "Список сабтасков должен быть пустым.");
         Epic epic1 = new Epic(1, "Эпик 1", "Описание эпика 1", TaskStatus.NEW, TaskType.EPIC);
         taskManager.createEpic(epic1);
         assertEquals(0, taskManager.getAllSubtasks().size(), "Список сабтасков не пустой");
-        Subtask subtask1 = new Subtask(2, "Сабтаск 1", "Описание сабтаска 1", TaskStatus.NEW, TaskType.SUBTASK, "2023.09.14",600, epic1.getId());
+        Subtask subtask1 = new Subtask(2, "Сабтаск 1", "Описание сабтаска 1", TaskStatus.NEW, TaskType.SUBTASK, "2023.09.14", 600, epic1.getId());
         taskManager.createSubtask(subtask1);
         List<Subtask> subtasks = taskManager.getAllSubtasks();
         assertNotNull(subtasks, "Сабтаски не возвращаются");
         assertEquals(1, subtasks.size(), "Неверное количество сабтасков");
         assertEquals(subtask1, subtasks.get(0), "Сабтаск в списке не совпадает с созданным");
     }
+
     @Test
-    void removeAllSubtasksTest(){
+    void removeAllSubtasksTest() {
         assertEquals(0, taskManager.getAllEpics().size(), "Список эпиков должен быть пустым.");
         assertEquals(0, taskManager.getAllSubtasks().size(), "Список сабтасков должен быть пустым.");
         assertEquals(0, taskManager.getAllEpics().size(), "Список эпиков должен быть пустым.");
         assertEquals(0, taskManager.getAllSubtasks().size(), "Список сабтасков должен быть пустым.");
         Epic epic1 = new Epic(1, "Эпик 1", "Описание эпика 1", TaskStatus.NEW, TaskType.EPIC);
-        Subtask subtask1 = new Subtask(2, "Сабтаск 1", "Описание сабтаска 1", TaskStatus.NEW, TaskType.SUBTASK, "2023.09.14",600, epic1.getId());
-        Subtask subtask2 = new Subtask(3, "Сабтаск 2", "Описание сабтаска 2", TaskStatus.NEW, TaskType.SUBTASK, "2023.09.15",800, epic1.getId());
+        Subtask subtask1 = new Subtask(2, "Сабтаск 1", "Описание сабтаска 1", TaskStatus.NEW, TaskType.SUBTASK, "2023.09.14", 600, epic1.getId());
+        Subtask subtask2 = new Subtask(3, "Сабтаск 2", "Описание сабтаска 2", TaskStatus.NEW, TaskType.SUBTASK, "2023.09.15", 800, epic1.getId());
         taskManager.createEpic(epic1);
         taskManager.createSubtask(subtask1);
         taskManager.createSubtask(subtask2);
@@ -216,38 +229,41 @@ public abstract class TaskManagerTest <T extends TaskManager> {
         List<Subtask> subtasks = taskManager.getAllSubtasks();
         assertTrue(subtasks.isEmpty(), "Не все задачи были удалены");
     }
+
     @Test
-    void removeSubtaskByIdTest(){
+    void removeSubtaskByIdTest() {
         assertEquals(0, taskManager.getAllEpics().size(), "Список эпиков должен быть пустым.");
         assertEquals(0, taskManager.getAllSubtasks().size(), "Список сабтасков должен быть пустым.");
         Epic epic1 = new Epic(1, "Эпик 1", "Описание эпика 1", TaskStatus.NEW, TaskType.EPIC);
         taskManager.createEpic(epic1);
         assertEquals(0, taskManager.getAllSubtasks().size(), "Список сабтасков не пустой");
-        Subtask subtask1 = new Subtask(2, "Сабтаск 1", "Описание сабтаска 1", TaskStatus.NEW, TaskType.SUBTASK, "2023.09.14",600, epic1.getId());
+        Subtask subtask1 = new Subtask(2, "Сабтаск 1", "Описание сабтаска 1", TaskStatus.NEW, TaskType.SUBTASK, "2023.09.14", 600, epic1.getId());
         taskManager.createSubtask(subtask1);
         taskManager.removeSubtaskById(2);
         assertEquals(0, taskManager.getAllSubtasks().size(), "Список сабтасков не пустой");
         assertTrue(taskManager.getAllSubtasks().isEmpty(), "Сабтаск не был удален из списка");
     }
+
     @Test
-    void getSubtaskByIdTest(){
+    void getSubtaskByIdTest() {
         assertEquals(0, taskManager.getAllEpics().size(), "Список эпиков должен быть пустым.");
         assertEquals(0, taskManager.getAllSubtasks().size(), "Список сабтасков должен быть пустым.");
         Epic epic1 = new Epic(1, "Эпик 1", "Описание эпика 1", TaskStatus.NEW, TaskType.EPIC);
-        Subtask subtask1 = new Subtask(2, "Сабтаск 1", "Описание сабтаска 1", TaskStatus.NEW, TaskType.SUBTASK, "2023.09.14",600, epic1.getId());
+        Subtask subtask1 = new Subtask(2, "Сабтаск 1", "Описание сабтаска 1", TaskStatus.NEW, TaskType.SUBTASK, "2023.09.14", 600, epic1.getId());
         taskManager.createEpic(epic1);
         taskManager.createSubtask(subtask1);
         assertNotNull(taskManager.getSubtaskById(2), "Сабтаск не получен, возвращен null");
         assertEquals(taskManager.getSubtaskById(2), subtask1, "Сабтаски не соответсвуют друг другу");
     }
+
     @Test
-    void updateSubtaskTest(){
+    void updateSubtaskTest() {
         assertEquals(0, taskManager.getAllEpics().size(), "Список эпиков должен быть пустым.");
         assertEquals(0, taskManager.getAllSubtasks().size(), "Список сабтасков должен быть пустым.");
         Epic epic1 = new Epic(1, "Эпик 1", "Описание эпика 1", TaskStatus.NEW, TaskType.EPIC);
         taskManager.createEpic(epic1);
         Subtask subtask1 = new Subtask(2, "Сабтаск 1", "Описание сабтаска 1", TaskStatus.NEW,
-                TaskType.SUBTASK, "2023.09.14",600, epic1.getId());
+                TaskType.SUBTASK, "2023.09.14", 600, epic1.getId());
         taskManager.createSubtask(subtask1);
         taskManager.updateSubtask(new Subtask(2, "Сабтаск 1", "Описание сабтаска 1 изменено",
                 TaskStatus.IN_PROGRESS, TaskType.SUBTASK, "2023.09.12", 800, epic1.getId()));
@@ -266,8 +282,9 @@ public abstract class TaskManagerTest <T extends TaskManager> {
         assertEquals(taskManager.getSubtaskById(2).getDuration(), epic1.getDuration(), "Продолжительрность выполнения эпика не обновлена");
         assertEquals(taskManager.getSubtaskById(2).getStatus(), epic1.getStatus(), "Статус эпика не обновлен");
     }
+
     @Test
-    void getHistoryTest(){
+    void getHistoryTest() {
         assertEquals(0, taskManager.getAllTasks().size(), "Список задач должен быть пустым.");
         assertEquals(0, taskManager.getAllEpics().size(), "Список эпиков должен быть пустым.");
         assertEquals(0, taskManager.getAllSubtasks().size(), "Список сабтасков должен быть пустым.");
@@ -281,7 +298,7 @@ public abstract class TaskManagerTest <T extends TaskManager> {
     }
 
     @Test
-    void getPrioritizedTasks(){
+    void getPrioritizedTasks() {
         Task task1 = new Task(1, "Задача 1", "Описание задачи 1", TaskStatus.NEW, TaskType.TASK, "2023.09.12", 600); //id = 1
         Task task2 = new Task(2, "Задача 2", "Описание задачи 2", TaskStatus.NEW, TaskType.TASK, "2023.09.14", 1000); //id = 2
         taskManager.createTask(task1);
@@ -289,6 +306,5 @@ public abstract class TaskManagerTest <T extends TaskManager> {
         Set<Task> prioritizedTasks = taskManager.getPrioritizedTasks();
         assertNotNull(prioritizedTasks, "Список задач по приоритетам не создан");
         assertEquals(2, prioritizedTasks.size(), "Список задач по приоритетам имеет неверную длину");
-//        assertEquals(task1, prioritizedTasks.);
     }
 }

@@ -2,10 +2,11 @@ package manager.memory;
 
 import manager.HistoryManager;
 import task.Task;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
-import java.util.ArrayList;
 
 public class InMemoryHistoryManager implements HistoryManager {
     Node first;
@@ -16,6 +17,7 @@ public class InMemoryHistoryManager implements HistoryManager {
     public List<Task> getHistory() {
         return getTasks();
     }
+
     public List<Task> getTasks() {
         List<Task> history = new ArrayList<>();
         if (first == null) {
@@ -28,10 +30,11 @@ public class InMemoryHistoryManager implements HistoryManager {
         }
         return history;
     }
+
     @Override
-    public void addTask(Task task){
+    public void addTask(Task task) {
         checkingLengthHistory(task); // перед добавлением новой записи в историю проверяем ее длину
-        if (map.get(task.getId()) == null){
+        if (map.get(task.getId()) == null) {
             Node node = new Node(task);
             linkLast(node);
             map.put(task.getId(), node);
@@ -40,15 +43,16 @@ public class InMemoryHistoryManager implements HistoryManager {
             linkLast(map.get(task.getId()));
         }
     }
-    public void checkingLengthHistory (Task task){ // функция проверки длины истории
-        if ((map.size() >= 10) && ((map.get(task.getId()) != null))){
+
+    public void checkingLengthHistory(Task task) { // функция проверки длины истории
+        if ((map.size() >= 10) && ((map.get(task.getId()) != null))) {
             map.remove(first.value.getId());
             removeNode(first);
         }
     }
 
-    public void linkLast(Node node){
-        if (first != null){
+    public void linkLast(Node node) {
+        if (first != null) {
             last.next = node;
             node.prev = last;
         } else {
@@ -56,15 +60,16 @@ public class InMemoryHistoryManager implements HistoryManager {
         }
         last = node;
     }
+
     public void removeNode(Node node) {
-        if((node.prev == null) && (node.next == null)){
+        if ((node.prev == null) && (node.next == null)) {
             first = null;
             last = null;
-        } else if((node.next == null) && (node.prev != null)){
+        } else if ((node.next == null) && (node.prev != null)) {
             node.prev.next = null;
             last = node.prev;
             node.prev = null;
-        } else if((node.prev == null) && (node.next != null)){
+        } else if ((node.prev == null) && (node.next != null)) {
             node.next.prev = null;
             first = node.next;
             node.next = null;
@@ -75,8 +80,9 @@ public class InMemoryHistoryManager implements HistoryManager {
             node.next = null;
         }
     }
+
     @Override
-    public void remove(int id){
+    public void remove(int id) {
         Node node = map.get(id);
         removeNode(node);
         map.remove(id);
@@ -95,5 +101,4 @@ public class InMemoryHistoryManager implements HistoryManager {
             return value;
         }
     }
-
 }

@@ -1,11 +1,10 @@
 import manager.Managers;
 import manager.TaskManager;
-import manager.file.FileBackedTasksManager;
-import task.*;
+import task.Epic;
+import task.Subtask;
+import task.Task;
 
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 public class Main {
@@ -58,22 +57,18 @@ public class Main {
 //Удаление элементов
         taskManager.removeTaskById(task1.getId());    //удаление id = 1
         taskManager.removeEpicById(epic1.getId());    //удаление id = 4 (5,6,7);
-//        System.out.println();
-//        System.out.println();
-//
-////Вывод истории
-//        List<Task> history = taskManager.getHistory();
-//        for (Task task : history) {
-//            System.out.println(task);
-//        }
 
+//Вывод истории
+        List<Task> history = taskManager.getHistory();
+        for (Task task : history) {
+            System.out.println(task);
+        }
+        //Ожидаем вывод до повторов: 1 8 11 5 3 10 2 4 6 7; после повторов: 7 3 4 6 9 1 8 11 5 10; после удаления: 3 9 8 11 10
+
+//Вывод задач по приоритету
         Set<Task> prioritizedTasks = taskManager.getPrioritizedTasks();
         for (Task task : prioritizedTasks) {
             System.out.println(task);
         }
-
-
-        //Ожидаем вывод до повторов: 1 8 11 5 3 10 2 4 6 7; после повторов: 7 3 4 6 9 1 8 11 5 10; после удаления: 3 9 8 11 10
     }
-
 }

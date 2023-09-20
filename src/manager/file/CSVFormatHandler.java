@@ -13,22 +13,25 @@ import static task.TaskType.TASK;
 
 public class CSVFormatHandler {
     private static final String DELIMITER = ",";
+
     static String getFirstString() {
         return "id,type,name,status,description,starttime,duration,epic";
     }
+
     static String toString(Task task) {
         String result = task.getId() + DELIMITER +
-               task.getType() + DELIMITER +
-               task.getName() + DELIMITER +
-               task.getStatus() + DELIMITER +
-               task.getDescription() + DELIMITER +
-               task.getStartTime().format(DateTimeFormatter.ofPattern("yyyy.MM.dd")) + DELIMITER +
-               task.getDuration().toMinutes();
+                task.getType() + DELIMITER +
+                task.getName() + DELIMITER +
+                task.getStatus() + DELIMITER +
+                task.getDescription() + DELIMITER +
+                task.getStartTime().format(DateTimeFormatter.ofPattern("yyyy.MM.dd")) + DELIMITER +
+                task.getDuration().toMinutes();
         if (task.getType() == TaskType.SUBTASK) {
             result = result + DELIMITER + ((Subtask) task).getEpicId();
         }
         return result;
     }
+
     static Task fromString(String row) {
         row = row.trim(); // удоляем пробелы из строки
         String[] parts = row.split(",");  // разбиваем строку на массив строк по элементу ","
@@ -51,13 +54,15 @@ public class CSVFormatHandler {
             return new Subtask(id, taskName, description, taskStatus, taskType, startTime, minutes, epicId);
         }
     }
+
     static String historyToString(HistoryManager historyManager) {
         List<String> result = new ArrayList<>();
-        for (Task task: historyManager.getHistory()) {
+        for (Task task : historyManager.getHistory()) {
             result.add(String.valueOf(task.getId()));
         }
         return String.join(DELIMITER, result);
     }
+
     static List<Integer> historyFromString(String rowHistory) {
         if (rowHistory == null) {
             return new ArrayList<>();

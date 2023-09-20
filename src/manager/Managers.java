@@ -8,11 +8,16 @@ import java.io.File;
 
 public final class Managers {
 
-    private Managers(){}
+    private Managers() {
+    }
 
     public static TaskManager getDefault() {
-       // return new InMemoryTaskManager();  // Выключаем реализацию метода InMemoryTaskManager
-        return new FileBackedTasksManager(new File("./resources/manager.csv"));   // Подключаем реализацию метода FileBackedTasksManager
+        boolean isChangeWorkWithFile = true;
+        if (isChangeWorkWithFile) {
+            return new FileBackedTasksManager(new File("./resources/manager.csv"));  // Подключаем реализацию метода FileBackedTasksManager
+        } else {
+            return new InMemoryTaskManager();  // Выключаем реализацию метода InMemoryTaskManager
+        }
     }
 
     public static HistoryManager getHistoryDefault() {

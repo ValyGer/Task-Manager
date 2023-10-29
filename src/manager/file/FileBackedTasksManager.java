@@ -56,7 +56,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         fileBackedTasksManager.getTaskById(task3.getId());       //id = 7
     }  // main метод тестирования работвы с файлами
 
-    private void save() {
+    public void save() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             // верхняя строка
             writer.write(CSVFormatHandler.getFirstString());

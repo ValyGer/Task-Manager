@@ -62,6 +62,14 @@ public class Main {
         for (Task task : prioritizedTasks) {
             System.out.println(task);
         }
-        kvServer.stop(1);
+        System.out.println();
+        System.out.println("Результат выполнения загрузки данных с сервера");
+        HttpTaskManager httpTaskManager = (HttpTaskManager)Managers.getDefault();
+        httpTaskManager.load();
+        System.out.println(httpTaskManager.getAllTasks());
+        System.out.println(httpTaskManager.getAllSubtasks());
+        System.out.println(httpTaskManager.getAllEpics());
+        System.out.println(httpTaskManager.getHistory());
+        System.out.println(httpTaskManager.getPrioritizedTasks());
     }
 }

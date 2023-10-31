@@ -311,6 +311,6 @@ public class HttpTaskServer {
     public static void main(String[] arg) throws IOException {
         final HttpTaskServer server = new HttpTaskServer();
         server.start();
-        server.stop(60);
+        server.stop(1);
     }
 }

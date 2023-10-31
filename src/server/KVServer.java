@@ -29,7 +29,7 @@ public class KVServer {
 
 	private void load(HttpExchange h) throws IOException {
 		try {
-			System.out.println("\n/load");
+//			System.out.println("\n/load");
 			if (!hasAuth(h)) {
 				System.out.println("Запрос неавторизован, нужен параметр в query API_TOKEN со значением апи-ключа");
 				h.sendResponseHeaders(403,0);
@@ -48,7 +48,6 @@ public class KVServer {
 					return;
 				}
 				sendText(h, data.get(key));
-				System.out.println("Загрузка успешно выполнена!");
 				h.sendResponseHeaders(200, 0);
 			} else {
 				System.out.println("/load ждёт GET-запрос, а получил: " + h.getRequestMethod());

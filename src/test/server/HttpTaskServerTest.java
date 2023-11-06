@@ -32,10 +32,7 @@ class HttpTaskServerTest {
         taskManager.createTask(task1);
         httpTaskServer.start();
     }
-    @AfterEach
-    void tearDown() {
-        httpTaskServer.stop(5);
-    }
+
     @Test
     void getAllTaskByPriorityTest() throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
@@ -109,5 +106,9 @@ class HttpTaskServerTest {
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
         assertEquals(200, response.statusCode());
+    }
+    @AfterEach
+    void tearDown() {
+        httpTaskServer.stop(5);
     }
 }

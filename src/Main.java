@@ -16,7 +16,8 @@ public class Main {
         KVServer kvServer = new KVServer();
         kvServer.start();
         TaskManager taskManager = Managers.getDefault();
-        new HttpTaskServer(taskManager).start();
+        HttpTaskServer httpTaskServer = new HttpTaskServer(taskManager);
+        httpTaskServer.start();
 
 //Создаем задачи
         Task task1 = new Task("Задача 1", "Описание задачи 1"); //id = 1
@@ -71,5 +72,7 @@ public class Main {
         System.out.println(httpTaskManager.getAllEpics());
         System.out.println(httpTaskManager.getHistory());
         System.out.println(httpTaskManager.getPrioritizedTasks());
+        httpTaskServer.stop(1);
+        kvServer.stop(1);
     }
 }

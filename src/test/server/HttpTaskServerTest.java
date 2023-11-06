@@ -3,6 +3,7 @@ package server;
 import com.google.gson.Gson;
 import manager.Managers;
 import manager.TaskManager;
+import manager.http.HttpTaskManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,17 +21,21 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class HttpTaskServerTest {
 
-    private HttpTaskServer httpTaskServer;
-    private TaskManager taskManager;
+    public HttpTaskServer httpTaskServer;
+    public TaskManager taskManager;
+    public  KVServer server;
 
     @BeforeEach
     void init() throws IOException {
+        server = new KVServer();
+        server.start();
         taskManager = Managers.getDefault();
         httpTaskServer = new HttpTaskServer(taskManager);
-        Task task1 = new Task(1, "Задача 1", "Описание задачи 1",
-                TaskStatus.NEW, TaskType.TASK, "2023.09.14", 600); //id = 1
-        taskManager.createTask(task1);
         httpTaskServer.start();
+
+        Task task1 = new Task(1, "Задача 1", "Описание задачи 1",
+        TaskStatus.NEW, TaskType.TASK, "2023.09.14", 600); //id = 1
+        taskManager.createTask(task1);
     }
 
     @Test
@@ -109,6 +114,7 @@ class HttpTaskServerTest {
     }
     @AfterEach
     void tearDown() {
-        httpTaskServer.stop(5);
+        httpTaskServer.stop(1);
+        server.stop(1);
     }
 }

@@ -1,7 +1,6 @@
 package task;
 
 import com.google.gson.*;
-import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
@@ -9,7 +8,6 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.time.Duration;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Task {
@@ -139,27 +137,30 @@ public class Task {
             return task;
         }
     }
+
     public static String localDataToString(JsonObject jsonObject) {
         JsonObject dataTime = jsonObject.get("startTime").getAsJsonObject();
         String startTimeResult = dataTime.get("year").getAsString();
         Integer startTimeMonth = dataTime.get("month").getAsInt();
         Integer startTimeDay = dataTime.get("day").getAsInt();
-            if (startTimeMonth <= 9) {
-                startTimeResult = startTimeResult + ".0" + startTimeMonth.toString();
-            } else {
-                startTimeResult = startTimeResult + "." + startTimeMonth.toString();
-            }
-            if (startTimeDay <= 9) {
-                startTimeResult = startTimeResult + ".0" + startTimeDay.toString();
-            } else {
-                startTimeResult = startTimeResult + "." + startTimeDay.toString();
-            }
+        if (startTimeMonth <= 9) {
+            startTimeResult = startTimeResult + ".0" + startTimeMonth.toString();
+        } else {
+            startTimeResult = startTimeResult + "." + startTimeMonth.toString();
+        }
+        if (startTimeDay <= 9) {
+            startTimeResult = startTimeResult + ".0" + startTimeDay.toString();
+        } else {
+            startTimeResult = startTimeResult + "." + startTimeDay.toString();
+        }
         return startTimeResult;
     }
+
     public static int durationToInteger(JsonObject jsonObject) {
         JsonObject duration = jsonObject.get("duration").getAsJsonObject();
         return duration.get("seconds").getAsInt() / 60;
     }
+
     public static class TaskSerializer implements JsonSerializer<Task> {
         @Override
         public JsonElement serialize(Task task, Type typeOfSrc, JsonSerializationContext context) {
@@ -175,6 +176,7 @@ public class Task {
             return result;
         }
     }
+
     public static class EpicDeSerializer implements JsonDeserializer<Epic> {
         @Override
         public Epic deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
@@ -190,6 +192,7 @@ public class Task {
             return epic;
         }
     }
+
     public static class EpicSerializer implements JsonSerializer<Epic> {
         @Override
         public JsonElement serialize(Epic epic, Type typeOfSrc, JsonSerializationContext context) {
@@ -203,6 +206,7 @@ public class Task {
             return result;
         }
     }
+
     public static class SubtaskDeSerializer implements JsonDeserializer<Subtask> {
         @Override
         public Subtask deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
@@ -221,6 +225,7 @@ public class Task {
             return subtask;
         }
     }
+
     public static class SubtaskSerializer implements JsonSerializer<Subtask> {
         @Override
         public JsonElement serialize(Subtask subtask, Type typeOfSrc, JsonSerializationContext context) {
@@ -237,22 +242,27 @@ public class Task {
             return result;
         }
     }
+
     public static class LocalDateAdapter extends TypeAdapter<LocalDate> {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
+
         @Override
         public void write(final JsonWriter jsonWriter, LocalDate localDate) throws IOException {
             jsonWriter.value(localDate.format(formatter));
         }
+
         @Override
         public LocalDate read(final JsonReader jsonReader) throws IOException {
             return LocalDate.parse(jsonReader.nextString(), formatter);
         }
     }
+
     public static class DurationAdapter extends TypeAdapter<Duration> {
         @Override
         public void write(final JsonWriter jsonWriter, final Duration duration) throws IOException {
             jsonWriter.value(duration.toSeconds() / 60);
         }
+
         @Override
         public Duration read(final JsonReader jsonReader) throws IOException {
             return Duration.ofSeconds((jsonReader.nextInt()) * 60);

@@ -16,11 +16,13 @@ import static org.junit.jupiter.api.Assertions.*;
 class HttpTaskManagerTest extends TaskManagerTest<HttpTaskManager> {
     public static KVServer server;
     public static HttpTaskServer taskServerTest;
+
     @BeforeAll
     static void start() throws IOException {
         server = new KVServer();
         server.start();
     }
+
     @BeforeEach
     void startService() throws IOException {
         taskManager = (HttpTaskManager) Managers.getDefault();
@@ -36,7 +38,7 @@ class HttpTaskManagerTest extends TaskManagerTest<HttpTaskManager> {
         taskManager.createTask(task1);
         taskManager.createEpic(epic1);
         taskManager.createSubtask(subtask1);
-        HttpTaskManager httpTaskManager = (HttpTaskManager)Managers.getDefault();
+        HttpTaskManager httpTaskManager = (HttpTaskManager) Managers.getDefault();
         httpTaskManager.load();
 
         assertEquals(3, httpTaskManager.getPrioritizedTasks().size());
@@ -47,7 +49,7 @@ class HttpTaskManagerTest extends TaskManagerTest<HttpTaskManager> {
     void checkingTheDownloadFromTheServerTask() {
         Task task1 = new Task(1, "Задача 1", "Описание задачи 1", TaskStatus.NEW, TaskType.TASK, "2023.09.12", 600); //id = 1
         taskManager.createTask(task1);
-        HttpTaskManager httpTaskManager = (HttpTaskManager)Managers.getDefault();
+        HttpTaskManager httpTaskManager = (HttpTaskManager) Managers.getDefault();
         httpTaskManager.load();
 
         assertNotNull(taskManager.getTaskById(1), "Задача не найдена");
@@ -64,7 +66,7 @@ class HttpTaskManagerTest extends TaskManagerTest<HttpTaskManager> {
     void checkingTheDownloadFromTheServerEpic() {
         Epic epic1 = new Epic(1, "Эпик 1", "Описание эпика 1", TaskStatus.NEW, TaskType.EPIC);
         taskManager.createEpic(epic1);
-        HttpTaskManager httpTaskManager = (HttpTaskManager)Managers.getDefault();
+        HttpTaskManager httpTaskManager = (HttpTaskManager) Managers.getDefault();
         httpTaskManager.load();
 
         assertNotNull(taskManager.getEpicById(1), "Эпик не найден");
@@ -84,7 +86,7 @@ class HttpTaskManagerTest extends TaskManagerTest<HttpTaskManager> {
         Subtask subtask1 = new Subtask(2, "Сабтаск 1", "Описание сабтаска 1", TaskStatus.NEW,
                 TaskType.SUBTASK, "2023.09.14", 600, epic1.getId());
         taskManager.createSubtask(subtask1);
-        HttpTaskManager httpTaskManager = (HttpTaskManager)Managers.getDefault();
+        HttpTaskManager httpTaskManager = (HttpTaskManager) Managers.getDefault();
         httpTaskManager.load();
 
         assertNotNull(taskManager.getSubtaskById(2), "Сабтаск не найден");

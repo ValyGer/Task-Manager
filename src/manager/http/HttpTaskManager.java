@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 public class HttpTaskManager extends FileBackedTasksManager {
 
-    private KVTaskClient client;
+    private final KVTaskClient client;
     private Gson gson = new Gson();
 
 
@@ -52,6 +52,7 @@ public class HttpTaskManager extends FileBackedTasksManager {
             prioritizedTasks.add(task);
         }
     }
+
     private void loadSubtask() {
         JsonElement jsonElement = JsonParser.parseString(client.load("subtask"));
         JsonArray jsonTasksArray = jsonElement.getAsJsonArray();
@@ -61,6 +62,7 @@ public class HttpTaskManager extends FileBackedTasksManager {
             prioritizedTasks.add(subtask);
         }
     }
+
     private void loadEpic() {
         JsonElement jsonElement = JsonParser.parseString(client.load("epic"));
         JsonArray jsonTasksArray = jsonElement.getAsJsonArray();

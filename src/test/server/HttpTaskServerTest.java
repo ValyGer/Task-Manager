@@ -23,7 +23,7 @@ class HttpTaskServerTest {
 
     public HttpTaskServer httpTaskServer;
     public TaskManager taskManager;
-    public  KVServer server;
+    public KVServer server;
 
     @BeforeEach
     void init() throws IOException {
@@ -34,7 +34,7 @@ class HttpTaskServerTest {
         httpTaskServer.start();
 
         Task task1 = new Task(1, "Задача 1", "Описание задачи 1",
-        TaskStatus.NEW, TaskType.TASK, "2023.09.14", 600); //id = 1
+                TaskStatus.NEW, TaskType.TASK, "2023.09.14", 600); //id = 1
         taskManager.createTask(task1);
     }
 
@@ -112,6 +112,7 @@ class HttpTaskServerTest {
 
         assertEquals(200, response.statusCode());
     }
+
     @AfterEach
     void tearDown() {
         httpTaskServer.stop(1);

@@ -18,9 +18,9 @@ import java.util.regex.Pattern;
 public class HttpTaskServer {
 
     public static final int PORT = 8080;
-    private HttpServer server;
-    private TaskManager manager;
-    private Gson gson;
+    private final HttpServer server;
+    private final TaskManager manager;
+    private final Gson gson;
 
 
     public HttpTaskServer(TaskManager manager) throws IOException {
@@ -37,8 +37,9 @@ public class HttpTaskServer {
         this.manager = Managers.getDefault();
         gson = Managers.getGson();
     }
+
     public void handler(HttpExchange httpExchange) {
-        try{
+        try {
             System.out.println("Обрабатывается end-point " + httpExchange.getRequestURI());
             String path = httpExchange.getRequestURI().toString().replaceFirst("/tasks", "");
             String method = httpExchange.getRequestMethod();
@@ -97,9 +98,9 @@ public class HttpTaskServer {
             }
 
         } else if (Pattern.matches("^/epic$", path)) {   // DELETE/tasks/epic
-                manager.removeAllEpics();
-                System.out.println("Все эпики удалены");
-                httpExchange.sendResponseHeaders(200, 0);
+            manager.removeAllEpics();
+            System.out.println("Все эпики удалены");
+            httpExchange.sendResponseHeaders(200, 0);
         } else if (Pattern.matches("^/epic/\\?id=\\d+$", path)) {    // DELETE/tasks/epic/?id=1
             String pathId = path.replaceFirst("/epic/\\?id=", "");
             int id = parsePathId(pathId);
@@ -147,8 +148,7 @@ public class HttpTaskServer {
                 System.out.println("Задача добавлена.");
                 httpExchange.sendResponseHeaders(200, 0);
             }
-        } else
-        if (Pattern.matches("^/subtask/$", path)) {   // POST/tasks/subtask
+        } else if (Pattern.matches("^/subtask/$", path)) {   // POST/tasks/subtask
             final String json = new String(httpExchange.getRequestBody().readAllBytes());
             final Subtask subtask = gson.fromJson(json, Subtask.class);
             boolean isCheck = false; // проверка на наличие сабтаска с тем же id что и в теле запроса
@@ -181,8 +181,7 @@ public class HttpTaskServer {
                 System.out.println("Задача добавлена.");
                 httpExchange.sendResponseHeaders(200, 0);
             }
-        } else
-        if (Pattern.matches("^/epic/$", path)) {   // POST/tasks/epic
+        } else if (Pattern.matches("^/epic/$", path)) {   // POST/tasks/epic
             final String json = new String(httpExchange.getRequestBody().readAllBytes());
             final Epic epic = gson.fromJson(json, Epic.class);
             boolean isCheck = false; // проверка на наличие эпика с тем же id что и в теле запроса
@@ -218,7 +217,7 @@ public class HttpTaskServer {
         }
     }
 
-    private void processingGetRequest (String path, HttpExchange httpExchange) throws IOException {
+    private void processingGetRequest(String path, HttpExchange httpExchange) throws IOException {
         if (Pattern.matches("^$", path)) {      // GET/tasks
             String response = gson.toJson(manager.getPrioritizedTasks());
             sendText(httpExchange, response);

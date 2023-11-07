@@ -65,7 +65,7 @@ public class Main {
         }
         System.out.println();
         System.out.println("Результат выполнения загрузки данных с сервера");
-        HttpTaskManager httpTaskManager = (HttpTaskManager)Managers.getDefault();
+        HttpTaskManager httpTaskManager = (HttpTaskManager) Managers.getDefault();
         httpTaskManager.load();
         System.out.println(httpTaskManager.getAllTasks());
         System.out.println(httpTaskManager.getAllSubtasks());

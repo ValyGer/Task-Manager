@@ -17,7 +17,7 @@ public class InMemoryTaskManager implements TaskManager {
     protected HashMap<Integer, Task> taskList = new HashMap<>();
     protected HashMap<Integer, Epic> epicList = new HashMap<>();
     protected HashMap<Integer, Subtask> subtaskList = new HashMap<>();
-    protected final Set<Task> prioritizedTasks = new TreeSet(new ComparatorForTask());
+    protected final Set<Task> prioritizedTasks = new TreeSet<>(new ComparatorForTask());
     protected final HistoryManager historyManager = Managers.getHistoryDefault();
 
     // возвращение списка приоритетных задач
@@ -37,7 +37,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public ArrayList<Task> getAllTasks() { // получение списка всех задач
-        return new ArrayList(taskList.values());
+        return new ArrayList<>(taskList.values());
     }
 
     @Override
@@ -85,7 +85,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public ArrayList<Epic> getAllEpics() { // получение списка всех эпиков
-        return new ArrayList(epicList.values());
+        return new ArrayList<>(epicList.values());
     }
 
     @Override
@@ -246,7 +246,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public ArrayList<Subtask> getAllSubtasks() { // получение списка всех subtask
-        return new ArrayList(subtaskList.values());
+        return new ArrayList<>(subtaskList.values());
     }
 
     @Override

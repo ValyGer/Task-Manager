@@ -37,7 +37,8 @@ public final class Managers {
     public static HistoryManager getHistoryDefault() {
         return new InMemoryHistoryManager();
     }
-    public static Gson getGson(){
+
+    public static Gson getGson() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(Task.class, new Task.TaskSerializer());
         gsonBuilder.registerTypeAdapter(Task.class, new Task.TaskDeSerializer());
